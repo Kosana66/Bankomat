@@ -15,6 +15,8 @@
       <itemPath>glcd.h</itemPath>
       <itemPath>glcd.c</itemPath>
       <itemPath>newmain.c</itemPath>
+      <itemPath>tajmer.h</itemPath>
+      <itemPath>tajmer.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"

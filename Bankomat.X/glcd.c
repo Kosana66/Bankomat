@@ -1,5 +1,5 @@
 /* 
- * File:   glcd.h
+ * File:   glcd.c
  * Author: kosana
  *
  * Created on 03.01.2023., 20.58
