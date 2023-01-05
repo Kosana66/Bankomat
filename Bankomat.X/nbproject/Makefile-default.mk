@@ -51,17 +51,17 @@ OBJECTDIR=build/${CND_CONF}/${IMAGE_TYPE}
 DISTDIR=dist/${CND_CONF}/${IMAGE_TYPE}
 
 # Source Files Quoted if spaced
-SOURCEFILES_QUOTED_IF_SPACED=glcd.c newmain.c tajmer.c
+SOURCEFILES_QUOTED_IF_SPACED=glcd.c newmain.c tajmer.c adc.c
 
 # Object Files Quoted if spaced
-OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/glcd.o ${OBJECTDIR}/newmain.o ${OBJECTDIR}/tajmer.o
-POSSIBLE_DEPFILES=${OBJECTDIR}/glcd.o.d ${OBJECTDIR}/newmain.o.d ${OBJECTDIR}/tajmer.o.d
+OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/glcd.o ${OBJECTDIR}/newmain.o ${OBJECTDIR}/tajmer.o ${OBJECTDIR}/adc.o
+POSSIBLE_DEPFILES=${OBJECTDIR}/glcd.o.d ${OBJECTDIR}/newmain.o.d ${OBJECTDIR}/tajmer.o.d ${OBJECTDIR}/adc.o.d
 
 # Object Files
-OBJECTFILES=${OBJECTDIR}/glcd.o ${OBJECTDIR}/newmain.o ${OBJECTDIR}/tajmer.o
+OBJECTFILES=${OBJECTDIR}/glcd.o ${OBJECTDIR}/newmain.o ${OBJECTDIR}/tajmer.o ${OBJECTDIR}/adc.o
 
 # Source Files
-SOURCEFILES=glcd.c newmain.c tajmer.c
+SOURCEFILES=glcd.c newmain.c tajmer.c adc.c
 
 
 
@@ -107,6 +107,12 @@ ${OBJECTDIR}/tajmer.o: tajmer.c  .generated_files/flags/default/59f92898ecccf126
 	@${RM} ${OBJECTDIR}/tajmer.o 
 	${MP_CC} $(MP_EXTRA_CC_PRE)  tajmer.c  -o ${OBJECTDIR}/tajmer.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/tajmer.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_ICD3=1    -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
 	
+${OBJECTDIR}/adc.o: adc.c  .generated_files/flags/default/457cb0cff4c88ed5e560db0e5e23e300bcba0bef .generated_files/flags/default/da39a3ee5e6b4b0d3255bfef95601890afd80709
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/adc.o.d 
+	@${RM} ${OBJECTDIR}/adc.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  adc.c  -o ${OBJECTDIR}/adc.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/adc.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_ICD3=1    -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
+	
 else
 ${OBJECTDIR}/glcd.o: glcd.c  .generated_files/flags/default/2f6310ba33aad4e0990770ed477ea797d942ee0b .generated_files/flags/default/da39a3ee5e6b4b0d3255bfef95601890afd80709
 	@${MKDIR} "${OBJECTDIR}" 
@@ -125,6 +131,12 @@ ${OBJECTDIR}/tajmer.o: tajmer.c  .generated_files/flags/default/24a4fd9f41f9494d
 	@${RM} ${OBJECTDIR}/tajmer.o.d 
 	@${RM} ${OBJECTDIR}/tajmer.o 
 	${MP_CC} $(MP_EXTRA_CC_PRE)  tajmer.c  -o ${OBJECTDIR}/tajmer.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/tajmer.o.d"        -g -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
+	
+${OBJECTDIR}/adc.o: adc.c  .generated_files/flags/default/31d4c1f6ff57d3fc6dc6bd71b9e31d4fec20a840 .generated_files/flags/default/da39a3ee5e6b4b0d3255bfef95601890afd80709
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/adc.o.d 
+	@${RM} ${OBJECTDIR}/adc.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  adc.c  -o ${OBJECTDIR}/adc.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/adc.o.d"        -g -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
 	
 endif
 

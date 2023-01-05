@@ -9,13 +9,169 @@
 #include <stdlib.h>
 #include "glcd.h"
 #include "tajmer.h"
+#include "adc.h"
 
 _FOSC(CSW_ON_FSCM_OFF & XT_PLL4);//instruction takt je isti kao i kristal
 //_FOSC(CSW_FSCM_OFF & XT);//deli sa 4
 _FWDT(WDT_OFF);
 _FGS(CODE_PROT_OFF);
 
-int ms, us, stanje, pritisnut_taster;
+
+unsigned int X, Y, x_vrednost, y_vrednost;
+const unsigned int AD_Xmin =220;
+const unsigned int AD_Xmax =3642;
+const unsigned int AD_Ymin =520;
+const unsigned int AD_Ymax =3450;
+
+unsigned int broj,broj1,broj2,temp0,temp1, sirovi0, sirovi1, tacna_sifra; 
+
+#define DRIVE_A PORTCbits.RC13
+#define DRIVE_B PORTCbits.RC14
+
+
+void Delay(unsigned int N)
+{
+	unsigned int i;
+	for(i=0;i<N;i++);
+}
+
+void TouchPanel (void)
+{
+// vode horizontalni tranzistori
+    DRIVE_A = 1;  
+    DRIVE_B = 0;
+    
+    LATCbits.LATC13=1;
+    LATCbits.LATC14=0;
+
+    Delay(500); //cekamo jedno vreme da se odradi AD konverzija
+				
+    // ocitavamo x	
+    x_vrednost = temp0;//temp0 je vrednost koji nam daje AD konvertor na BOTTOM pinu		
+
+// vode vertikalni tranzistori
+
+    DRIVE_A = 0;  
+    DRIVE_B = 1;
+    
+    LATCbits.LATC13=0;
+    LATCbits.LATC14=1;
+
+    Delay(500); //cekamo jedno vreme da se odradi AD konverzija
+	
+    // ocitavamo y	
+    y_vrednost = temp1;// temp1 je vrednost koji nam daje AD konvertor na LEFT pinu	
+	
+//Ako ?elimo da nam X i Y koordinate budu kao rezolucija ekrana 128x64 treba skalirati vrednosti x_vrednost i y_vrednost tako da budu u opsegu od 0-128 odnosno 0-64
+//skaliranje x-koordinate
+    X=(x_vrednost-161)*0.03629;
+    // X= ((x_vrednost-AD_Xmin)/(AD_Xmax-AD_Xmin))*128;	
+//vrednosti AD_Xmin i AD_Xmax su minimalne i maksimalne vrednosti koje daje AD konvertor za touch panel.
+//Skaliranje y-koordinate
+    Y=(y_vrednost-500)*0.020725;
+    // Y= ((y_vrednost-AD_Ymin)/(AD_Ymax-AD_Ymin))*64;
+}
+	
+void __attribute__((__interrupt__)) _ADCInterrupt(void) 
+{
+    sirovi0=ADCBUF0;//0
+    sirovi1=ADCBUF1;//1
+
+    temp0=sirovi0;
+    temp1=sirovi1;
+
+    IFS0bits.ADIF = 0;
+} 
+
+// POTREBNO DA BI SE KALIBRISAO TOUCH SCREEN
+
+void Write_GLCD(unsigned int data)
+{
+    unsigned char temp;
+    temp=data/1000;
+    Glcd_PutChar(temp+'0');
+    data=data-temp*1000;
+    temp=data/100;
+    Glcd_PutChar(temp+'0');
+    data=data-temp*100;
+    temp=data/10;
+    Glcd_PutChar(temp+'0');
+    data=data-temp*10;
+    Glcd_PutChar(data+'0');
+}
+
+enum STATE {START, TASTER2, TASTER3, TASTER4, KRAJ};
+enum STATE stanje;
+
+// SIFRA:
+int password[4] = {9, 6, 3, 0};
+
+int OcitajTaster()
+{
+    if((0<X)&&(X<14) && (0<Y)&&(Y<15))   return 1;
+    if((15<X)&&(X<30) && (0<Y)&&(Y<15))   return 2;
+    if((31<X)&&(X<46) && (0<Y)&&(Y<15))   return 3;
+    if((0<X)&&(X<14) && (16<Y)&&(Y<32))   return 4;
+    if((15<X)&&(X<30) && (16<Y)&&(Y<32))   return 5;
+    if((31<X)&&(X<46) && (16<Y)&&(Y<32))   return 6;
+    if((0<X)&&(X<14) && (33<Y)&&(Y<49))   return 7;
+    if((15<X)&&(X<30) && (33<Y)&&(Y<49))   return 8;
+    if((31<X)&&(X<46) && (33<Y)&&(Y<49))   return 9;
+    if((15<X)&&(X<30) && (50<Y)&&(Y<66))   return 9;
+    return 10;
+}
+
+int ProveraSifre()
+{
+    tacna_sifra=0;
+    switch(stanje)
+        {
+            case START:
+		if(OcitajTaster() == password[0])   stanje = TASTER2;
+            /*    if(OcitajTaster() != 10 && OcitajTaster() !=password[0])    
+                {
+                    stanje = START;
+                    Buzzer; 
+                } */
+            break;
+					
+            case TASTER2:
+                if(OcitajTaster() == password[1])   stanje = TASTER3;
+            /*    if(OcitajTaster() != 10 && OcitajTaster() !=password[1])    
+                {
+                    stanje = START;
+                    Buzzer; 
+                } */
+            break;
+                       
+            case TASTER3:
+                if(OcitajTaster() == password[2]) stanje = TASTER4;
+            /*    if(OcitajTaster() != 10 && OcitajTaster() !=password[2])    
+                {
+                    stanje = START;
+                    Buzzer; 
+                } */
+            break;
+                    
+            case TASTER4:
+                if(OcitajTaster() == password[3]) stanje = KRAJ;
+            /*    if(OcitajTaster() != 10 && OcitajTaster() !=password[3])    
+                {
+                    stanje = START;
+                    Buzzer; 
+                } */
+            break;
+            
+            case KRAJ:
+                tacna_sifra=1;
+            break;
+        }
+    return tacna_sifra;
+}
+
+
+int ms, us;
+int stanje1, pritisnut_taster1, stanje2, pritisnut_taster2;
 
 // funkcija za kasnjenje u milisekundama
 void Delay_ms (int vreme)
@@ -180,43 +336,80 @@ int PirSenzor()
         return 0;
     }
 }
+
+// f-ja za generisanje PWM za servo
+void ServoPWM(int dutty_cycle)
+{
+    LATBbits.LATB11 = 1;
+    Delay_ms(dutty_cycle);
+    LATBbits.LATB11 = 0;
+    Delay_ms(20-dutty_cycle);
+}
+
 // f-ja za upravljanje servo motorom
 void ServoMotor()
 {  
+    if(PORTDbits.RD8 )
+        ServoPWM(1);
+    if(PORTDbits.RD9 )
+        ServoPWM(2);
+    
+    /*
     // softversko diferenciranje da bi se resio debouncing
-    if(PORTDbits.RD8 || PORTDbits.RD9)
+    if(PORTDbits.RD8 )
     {
-        if(stanje<21)
-            stanje++;
+        if(stanje1<21)
+            stanje1++;
     }
     else
-        stanje=0;
+        stanje1=0;
 
-    if(stanje==20)
-        pritisnut_taster=1;
+    if(stanje1==20)
+        pritisnut_taster1=1;
         
-    if(pritisnut_taster==1)//ako je taster pritisnut
+    if(pritisnut_taster1==1)//ako je taster pritisnut
     {
         // otvaranje vrata pomocu servo motora ( -90 stepeni )
-        LATBbits.LATB11 = 1;
-        Delay_ms(1);
-        LATBbits.LATB11 = 0;
-        Delay_ms(19);
-        LATBbits.LATB11 = 1;
-        
-        // cekanje 10s da korisnik unese/izvadi novac
-        // Delay_ms(10000);
-    
-        // zatvaranje vrata pomocu servo motora ( 90 stepeni )
-        LATBbits.LATB11 = 1;
-        Delay_ms(2);
-        LATBbits.LATB11 = 0;
-        Delay_ms(18); 
-        LATBbits.LATB11 = 1;
-        
-        pritisnut_taster=0;
+        generisanje_PWM_servo(1);
+       
+        pritisnut_taster1=0;
     }
+    
+    // softversko diferenciranje da bi se resio debouncing
+        if(PORTCbits.RC15)
+        {
+            if(stanje2<21)
+                stanje2++;
+        }
+        else
+            stanje2=0;
+
+        if(stanje2==20)
+            pritisnut_taster2=1;
+
+        if(pritisnut_taster2==1)//ako je taster pritisnut
+        {
+            // zatvaranje vrata pomocu servo motora ( 90 stepeni )
+            LATBbits.LATB11 = 1;
+            Delay_ms(2);
+            LATBbits.LATB11 = 0;
+            Delay_ms(18); 
+            
+            pritisnut_taster2=0;
+        }*/
  }
+
+// f-ja za buzzer
+void Buzzer()
+{
+    for(int n=0; n<50; n++)
+    {
+        LATAbits.LATA11 = 1;
+        Delay_us(5);
+        LATAbits.LATA11 = 0;
+        Delay_us(20);
+    }
+}
 
 int main(int argc, char** argv) {
 
@@ -232,23 +425,45 @@ int main(int argc, char** argv) {
     // za servo motor
     ADPCFGbits.PCFG11=1; // digitalni
     TRISBbits.TRISB11=0;// izlaz za pwm
+    
     // za taster kojim se bira uplata/isplata
     TRISDbits.TRISD8=1; // ulaz  
     TRISDbits.TRISD9=1; // ulaz
-    TRISAbits.TRISA11=0; // ulaz
      
+    // za buzzer
+    TRISAbits.TRISA11=0;// izlaz za pwm
+    
+    // za ad konverziju
+    ConfigureADCPins();
+    ADCinit();
+    ADCON1bits.ADON=1;
+    
+    // za touch srceen
+    ConfigureADCPins();
+    ADCinit();
+    ADCON1bits.ADON=1;
+    TRISCbits.TRISC13=0;
+    TRISCbits.TRISC14=0;
+    stanje = START;
+    
+    // za tajmere
     Init_T1();
+    Init_T2();
     
-    
-   // Init_T2();
     while(1)
     {
-   /*     DnevniScreensaver();
+        DnevniScreensaver();
         while(!PirSenzor());
         GLCD_ClrScr();
-        PocetniEkran();*/
+        PocetniEkran();
         
-        ServoMotor();
+        if(PORTDbits.RD8)
+            ServoPWM(1);
+        if(PORTDbits.RD9)
+            ServoPWM(2);
+            
+      while(1);
+       
         
     }
     
