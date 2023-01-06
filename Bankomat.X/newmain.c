@@ -16,14 +16,13 @@ _FOSC(CSW_ON_FSCM_OFF & XT_PLL4);//instruction takt je isti kao i kristal
 _FWDT(WDT_OFF);
 _FGS(CODE_PROT_OFF);
 
-
 unsigned int X, Y, x_vrednost, y_vrednost;
 const unsigned int AD_Xmin =220;
 const unsigned int AD_Xmax =3642;
 const unsigned int AD_Ymin =520;
 const unsigned int AD_Ymax =3450;
 
-unsigned int broj,broj1,broj2,temp0,temp1, sirovi0, sirovi1, tacna_sifra; 
+unsigned int broj,broj1,broj2, temp0, temp1, sirovi0, sirovi1, tacna_sifra; 
 
 #define DRIVE_A PORTCbits.RC13
 #define DRIVE_B PORTCbits.RC14
@@ -337,66 +336,23 @@ int PirSenzor()
     }
 }
 
-// f-ja za generisanje PWM za servo
-void ServoPWM(int dutty_cycle)
-{
-    LATBbits.LATB11 = 1;
-    Delay_ms(dutty_cycle);
-    LATBbits.LATB11 = 0;
-    Delay_ms(20-dutty_cycle);
-}
 
 // f-ja za upravljanje servo motorom
 void ServoMotor()
 {  
-    if(PORTDbits.RD8 )
-        ServoPWM(1);
-    if(PORTDbits.RD9 )
-        ServoPWM(2);
-    
-    /*
-    // softversko diferenciranje da bi se resio debouncing
-    if(PORTDbits.RD8 )
-    {
-        if(stanje1<21)
-            stanje1++;
-    }
-    else
-        stanje1=0;
-
-    if(stanje1==20)
-        pritisnut_taster1=1;
+    // otvaranje vrata pomocu servo motora ( -90 stepeni )
+    LATBbits.LATB11 = 1;
+    Delay_ms(2);
+    LATBbits.LATB11 = 0;
+    Delay_ms(18);
         
-    if(pritisnut_taster1==1)//ako je taster pritisnut
-    {
-        // otvaranje vrata pomocu servo motora ( -90 stepeni )
-        generisanje_PWM_servo(1);
-       
-        pritisnut_taster1=0;
-    }
-    
-    // softversko diferenciranje da bi se resio debouncing
-        if(PORTCbits.RC15)
-        {
-            if(stanje2<21)
-                stanje2++;
-        }
-        else
-            stanje2=0;
-
-        if(stanje2==20)
-            pritisnut_taster2=1;
-
-        if(pritisnut_taster2==1)//ako je taster pritisnut
-        {
-            // zatvaranje vrata pomocu servo motora ( 90 stepeni )
-            LATBbits.LATB11 = 1;
-            Delay_ms(2);
-            LATBbits.LATB11 = 0;
-            Delay_ms(18); 
-            
-            pritisnut_taster2=0;
-        }*/
+    while(!PORTCbits.RC15); // cekanje da se pritisne taster za zatvaranje vrata
+        
+    // zatvaranje vrata pomocu servo motora ( 90 stepeni )   
+    LATBbits.LATB11 = 1;
+    Delay_ms(1);
+    LATBbits.LATB11 = 0;
+    Delay_ms(19);
  }
 
 // f-ja za buzzer
@@ -405,9 +361,9 @@ void Buzzer()
     for(int n=0; n<50; n++)
     {
         LATAbits.LATA11 = 1;
-        Delay_us(5);
+        Delay_us(300);
         LATAbits.LATA11 = 0;
-        Delay_us(20);
+        Delay_us(700);
     }
 }
 
@@ -425,18 +381,10 @@ int main(int argc, char** argv) {
     // za servo motor
     ADPCFGbits.PCFG11=1; // digitalni
     TRISBbits.TRISB11=0;// izlaz za pwm
-    
-    // za taster kojim se bira uplata/isplata
-    TRISDbits.TRISD8=1; // ulaz  
-    TRISDbits.TRISD9=1; // ulaz
+    TRISCbits.TRISC15=1; // ulaz za taster kojim se bira zatvaraju vrata
      
     // za buzzer
     TRISAbits.TRISA11=0;// izlaz za pwm
-    
-    // za ad konverziju
-    ConfigureADCPins();
-    ADCinit();
-    ADCON1bits.ADON=1;
     
     // za touch srceen
     ConfigureADCPins();
@@ -445,26 +393,20 @@ int main(int argc, char** argv) {
     TRISCbits.TRISC13=0;
     TRISCbits.TRISC14=0;
     stanje = START;
-    
+   
     // za tajmere
     Init_T1();
     Init_T2();
     
     while(1)
     {
-        DnevniScreensaver();
+    /*    DnevniScreensaver();
         while(!PirSenzor());
         GLCD_ClrScr();
-        PocetniEkran();
+        PocetniEkran(); */
         
-        if(PORTDbits.RD8)
-            ServoPWM(1);
-        if(PORTDbits.RD9)
-            ServoPWM(2);
-            
-      while(1);
-       
-        
+       // Buzzer();
+       // ServoMotor();
     }
     
     
