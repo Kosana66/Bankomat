@@ -10,6 +10,7 @@
 #include "glcd.h"
 #include "tajmer.h"
 #include "adc.h"
+#include "uart.h"
 
 _FOSC(CSW_ON_FSCM_OFF & XT_PLL4);//instruction takt je isti kao i kristal
 //_FOSC(CSW_FSCM_OFF & XT);//deli sa 4
@@ -37,6 +38,8 @@ enum STATE stanje;
 int tacna_sifra;
 // SIFRA:
 int password[4] = {9, 6, 3, 0};
+
+unsigned char tempRX;
 
 // slika tastature
 const char tastatura [1024] = {
@@ -140,6 +143,14 @@ void __attribute__((__interrupt__)) _ADCInterrupt(void)
     IFS0bits.ADIF = 0;
 } 
 
+// prekidna rutina za UART
+void __attribute__((__interrupt__)) _U1RXInterrupt(void) 
+{
+    IFS0bits.U1RXIF = 0;
+    tempRX = 0;
+    tempRX=U1RXREG;
+} 
+
 /*************************************************************/
 // FUNKCIJE ZA TAJMERE
 /*************************************************************/
@@ -209,6 +220,10 @@ int main(int argc, char** argv) {
     Init_T1();
     Init_T2();
     
+    // za uart
+    InitUART1();
+    tempRX=0;
+    
     DnevniScreensaver();
     while(!PirSenzor()); 
     GLCD_ClrScr();
@@ -223,10 +238,39 @@ int main(int argc, char** argv) {
             GLCD_ClrScr();
             GoToXY(35,4);
             GLCD_Printf("TACAN PIN");
-            Delay(10000);
+            while(tempRX==0);
+            GoToXY(35,5);
+            WriteNumberonGLCD(tempRX);
+            WriteStringUART1("Izaberite:\n");
+            WriteStringUART1("1.UPLATA\n");
+            WriteStringUART1("2.ISPLATA\n\n");
+            while(tempRX!=1 && tempRX!=2);
+            if(tempRX==1)   
+            {
+                WriteStringUART1("---> Korisnik je pritisnuo uplatu\n");
+                GLCD_ClrScr();
+                GoToXY(35,4);
+                GLCD_Printf("UPLATA");
+            }
+            if(tempRX==2)  
+            {
+                WriteStringUART1("---> Korisnik je pritisnuo isplatu\n");
+                GLCD_ClrScr();
+                GoToXY(35,4);
+                GLCD_Printf("ISPLATA");
+            }
+            tempRX=0;
             OtvoriVrata();
             Delay_ms(10000);
             ZatvoriVrata();
+            GLCD_ClrScr();
+            GoToXY(25,3);
+            GLCD_Printf("Hvala Vam sto");
+            GoToXY(25,4);
+            GLCD_Printf("koristite nas");
+            GoToXY(40,5);
+            GLCD_Printf("bankomat");
+            Delay_ms(5000);
             GLCD_ClrScr();
             PocetniEkran();
         } 
@@ -262,7 +306,7 @@ void Delay(unsigned int N)
 }
 	
 // f-ja za ispis jednocifrenog broja
-void WriteNumberonGLCD( int data)
+void WriteNumberonGLCD(int data)
 {
     char temp;
     temp=data;
@@ -325,13 +369,9 @@ void Buzzer()
 int PirSenzor()
 {
     if(PORTBbits.RB12==1)
-    {
         return 1; 
-    }
     else
-    {
         return 0;
-    }
 }
 
 // f-ja za ocitavanje polozaja pritiska na touch panelu

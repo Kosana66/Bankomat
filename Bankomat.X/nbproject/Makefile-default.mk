@@ -51,17 +51,17 @@ OBJECTDIR=build/${CND_CONF}/${IMAGE_TYPE}
 DISTDIR=dist/${CND_CONF}/${IMAGE_TYPE}
 
 # Source Files Quoted if spaced
-SOURCEFILES_QUOTED_IF_SPACED=glcd.c newmain.c tajmer.c adc.c
+SOURCEFILES_QUOTED_IF_SPACED=glcd.c newmain.c tajmer.c adc.c uart.c
 
 # Object Files Quoted if spaced
-OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/glcd.o ${OBJECTDIR}/newmain.o ${OBJECTDIR}/tajmer.o ${OBJECTDIR}/adc.o
-POSSIBLE_DEPFILES=${OBJECTDIR}/glcd.o.d ${OBJECTDIR}/newmain.o.d ${OBJECTDIR}/tajmer.o.d ${OBJECTDIR}/adc.o.d
+OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/glcd.o ${OBJECTDIR}/newmain.o ${OBJECTDIR}/tajmer.o ${OBJECTDIR}/adc.o ${OBJECTDIR}/uart.o
+POSSIBLE_DEPFILES=${OBJECTDIR}/glcd.o.d ${OBJECTDIR}/newmain.o.d ${OBJECTDIR}/tajmer.o.d ${OBJECTDIR}/adc.o.d ${OBJECTDIR}/uart.o.d
 
 # Object Files
-OBJECTFILES=${OBJECTDIR}/glcd.o ${OBJECTDIR}/newmain.o ${OBJECTDIR}/tajmer.o ${OBJECTDIR}/adc.o
+OBJECTFILES=${OBJECTDIR}/glcd.o ${OBJECTDIR}/newmain.o ${OBJECTDIR}/tajmer.o ${OBJECTDIR}/adc.o ${OBJECTDIR}/uart.o
 
 # Source Files
-SOURCEFILES=glcd.c newmain.c tajmer.c adc.c
+SOURCEFILES=glcd.c newmain.c tajmer.c adc.c uart.c
 
 
 
@@ -113,6 +113,12 @@ ${OBJECTDIR}/adc.o: adc.c  .generated_files/flags/default/457cb0cff4c88ed5e560db
 	@${RM} ${OBJECTDIR}/adc.o 
 	${MP_CC} $(MP_EXTRA_CC_PRE)  adc.c  -o ${OBJECTDIR}/adc.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/adc.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_ICD3=1    -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
 	
+${OBJECTDIR}/uart.o: uart.c  .generated_files/flags/default/ece208695ff7d6d9f6b42aacaf28a55bb8e24909 .generated_files/flags/default/da39a3ee5e6b4b0d3255bfef95601890afd80709
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/uart.o.d 
+	@${RM} ${OBJECTDIR}/uart.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  uart.c  -o ${OBJECTDIR}/uart.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/uart.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_ICD3=1    -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
+	
 else
 ${OBJECTDIR}/glcd.o: glcd.c  .generated_files/flags/default/2f6310ba33aad4e0990770ed477ea797d942ee0b .generated_files/flags/default/da39a3ee5e6b4b0d3255bfef95601890afd80709
 	@${MKDIR} "${OBJECTDIR}" 
@@ -137,6 +143,12 @@ ${OBJECTDIR}/adc.o: adc.c  .generated_files/flags/default/31d4c1f6ff57d3fc6dc6bd
 	@${RM} ${OBJECTDIR}/adc.o.d 
 	@${RM} ${OBJECTDIR}/adc.o 
 	${MP_CC} $(MP_EXTRA_CC_PRE)  adc.c  -o ${OBJECTDIR}/adc.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/adc.o.d"        -g -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
+	
+${OBJECTDIR}/uart.o: uart.c  .generated_files/flags/default/de7791abce40dd59dee897407de46a28b23929f2 .generated_files/flags/default/da39a3ee5e6b4b0d3255bfef95601890afd80709
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/uart.o.d 
+	@${RM} ${OBJECTDIR}/uart.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  uart.c  -o ${OBJECTDIR}/uart.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/uart.o.d"        -g -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
 	
 endif
 
