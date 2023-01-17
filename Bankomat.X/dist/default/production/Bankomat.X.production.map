@@ -120,12 +120,12 @@ Default Scalar Model: Small
 
 section                    address   length (PC units)   length (bytes) (dec)
 -------                    -------   -----------------   --------------------
-.text                        0x100               0x750           0xaf8  (2808)
-.const                       0x850               0xeae          0x1605  (5637)
-.text                       0x16fe               0xff0          0x17e8  (6120)
-.dinit                      0x26ee                0x20            0x30  (48)
+.text                        0x100               0x760           0xb10  (2832)
+.const                       0x860               0xe8e          0x15d5  (5589)
+.text                       0x16ee              0x10be          0x191d  (6429)
+.dinit                      0x27ac                0x20            0x30  (48)
 
-                 Total "program" memory used (bytes):         0x3915  (14613) 29%
+                 Total "program" memory used (bytes):         0x3a32  (14898) 30%
 
 
 "data" Memory  [Origin = 0x800, Length = 0x800]
@@ -157,20 +157,20 @@ External Symbols in Data Memory (by address):
                     0x0802                  _Y
                     0x0804                  _x_vrednost
                     0x0806                  _y_vrednost
-                    0x0808                  _temp0
-                    0x080a                  _temp1
-                    0x080c                  _temp2
-                    0x080e                  _sirovi0
-                    0x0810                  _sirovi1
-                    0x0812                  _sirovi2
-                    0x0814                  _ms
-                    0x0816                  _us
-                    0x0818                  _stanje1
-                    0x081a                  _pritisnut_taster1
-                    0x081c                  _stanje2
-                    0x081e                  _pritisnut_taster2
-                    0x0820                  _stanje
-                    0x0822                  _tacna_sifra
+                    0x0808                  _sirovi0
+                    0x080a                  _sirovi1
+                    0x080c                  _sirovi2
+                    0x080e                  _ms
+                    0x0810                  _us
+                    0x0812                  _pola_milisekunde
+                    0x0814                  _stanje11
+                    0x0816                  _pritisnut_taster1
+                    0x0818                  _stanje12
+                    0x081a                  _pritisnut_taster2
+                    0x081c                  _stanje1
+                    0x081e                  _stanje2
+                    0x0820                  _tacna_sifra
+                    0x0822                  _taster
                     0x0824                  _tempRX
                     0x0826                  _password
                     0x082e                  _kursorX
@@ -183,23 +183,23 @@ External Symbols in Data Memory (by name):
                     0x0802                  _Y
                     0x082e                  _kursorX
                     0x082f                  _kursorY
-                    0x0814                  _ms
+                    0x080e                  _ms
                     0x0826                  _password
-                    0x081a                  _pritisnut_taster1
-                    0x081e                  _pritisnut_taster2
-                    0x080e                  _sirovi0
-                    0x0810                  _sirovi1
-                    0x0812                  _sirovi2
-                    0x0820                  _stanje
-                    0x0818                  _stanje1
-                    0x081c                  _stanje2
+                    0x0812                  _pola_milisekunde
+                    0x0816                  _pritisnut_taster1
+                    0x081a                  _pritisnut_taster2
+                    0x0808                  _sirovi0
+                    0x080a                  _sirovi1
+                    0x080c                  _sirovi2
+                    0x081c                  _stanje1
+                    0x0814                  _stanje11
+                    0x0818                  _stanje12
+                    0x081e                  _stanje2
                     0x0830                  _strana
-                    0x0822                  _tacna_sifra
-                    0x0808                  _temp0
-                    0x080a                  _temp1
-                    0x080c                  _temp2
+                    0x0820                  _tacna_sifra
+                    0x0822                  _taster
                     0x0824                  _tempRX
-                    0x0816                  _us
+                    0x0810                  _us
                     0x0804                  _x_vrednost
                     0x0806                  _y_vrednost
 
@@ -207,191 +207,197 @@ External Symbols in Program Memory (by address):
 
                   0x000100                  __resetPRI
                   0x00013c                  __psv_init
-                  0x000152                  __data_init_standard
                   0x000152                  __data_init
+                  0x000152                  __data_init_standard
                   0x0001c8                  __T1Interrupt
                   0x0001e4                  __T2Interrupt
-                  0x000200                  __ADCInterrupt
-                  0x00022c                  __U1RXInterrupt
-                  0x000248                  __DefaultInterrupt
-                  0x00024e                  ___fixunssfsi
-                  0x000284                  ___floatsisf
-                  0x00028a                  ___floatunsisf
-                  0x00028e                  __funpack
-                  0x0002b8                  ___divsf3
-                  0x0002b8                  ___divsf3x
-                  0x00044a                  __sdivf
-                  0x000476                  ___mulsf3x
-                  0x000476                  ___mulsf3
-                  0x000582                  __dnrmpackf
-                  0x0005d6                  __unpackdnrmf
-                  0x000634                  __typef
-                  0x000668                  __propnanf
-                  0x00067a                  __spackf
-                  0x000720                  __unpackf
-                  0x000786                  ___floatdisf
-                  0x0007a6                  ___floatundisf
-                  0x000804                  __fpack
-                  0x000850                  _fontBIG
-                  0x000e00                  _font
-                  0x001200                  _AD_Xmin
-                  0x001202                  _AD_Xmax
-                  0x001204                  _AD_Ymin
-                  0x001206                  _AD_Ymax
-                  0x001208                  _tastatura
-                  0x0016fe                  _SetRST
-                  0x00171a                  _SetE
-                  0x001736                  _SetRW
-                  0x001752                  _SetRS
-                  0x00176e                  _SetCS2
-                  0x00178a                  _SetCS1
-                  0x0017a6                  _ConfigureLCDPins
-                  0x0017d4                  _ConfigureLcdData
-                  0x001808                  _SetLcdData
-                  0x001848                  _ReadLcdData
-                  0x001876                  _strobe_data
-                  0x001884                  _LcdInstructionWrite
-                  0x00189a                  _LcdDelay
-                  0x0018b6                  _LcdWaitBusy
-                  0x0018e0                  _GoToX
-                  0x00191a                  _GoToY
-                  0x001934                  _GoToXY
-                  0x00194a                  _LcdSelectStartline
-                  0x001958                  _LcdSelectSide
-                  0x001992                  _LcdDataRead
-                  0x0019c0                  _GLCD_LcdInit
-                  0x001a22                  _LcdDataWrite
-                  0x001a38                  _GLCD_ClrScr
-                  0x001a90                  _GLCD_FillScr
-                  0x001ae8                  _GLCD_DisplayPicture
-                  0x001b6a                  _LcdSetDot
-                  0x001bb8                  _LcdResDot
-                  0x001c08                  _GLCD_Circle
-                  0x001d7c                  _GLCD_Rectangle
-                  0x001e06                  _Glcd_PutChar
-                  0x001e74                  _Glcd_PutCharBig
-                  0x001f30                  _GLCD_Printf
-                  0x001f4a                  _GLCD_ShowGreed
-                  0x001fe8                  _GLCD_Clr_Rectangle
-                  0x002072                  _main
-                  0x002154                  _Delay_ms
-                  0x002166                  _Delay_us
-                  0x002178                  _Delay
-                  0x002194                  _WriteNumberonGLCD
-                  0x0021ae                  _PocetniEkran
-                  0x0021d2                  _DnevniScreensaver
-                  0x00220a                  _NocniScreensaver
-                  0x002242                  _Buzzer
-                  0x002264                  _PirSenzor
-                  0x00227a                  _TouchPanel
-                  0x0022c8                  _OcitajTaster
-                  0x00240c                  _ProveraSifre
-                  0x002538                  _OtvoriVrata
-                  0x00254a                  _ZatvoriVrata
-                  0x00255c                  _InitUART1
-                  0x002576                  _WriteCharUART1
-                  0x00259e                  _WriteStringUART1
-                  0x0025ce                  _WriteUART1dec2string
-                  0x002650                  _ConfigureADCPins
-                  0x002662                  _ADCinit
-                  0x0026c6                  _Init_T1
-                  0x0026da                  _Init_T2
+                  0x000200                  __T3Interrupt
+                  0x00021c                  __ADCInterrupt
+                  0x00023e                  __U1RXInterrupt
+                  0x000258                  __DefaultInterrupt
+                  0x00025e                  ___fixunssfsi
+                  0x000294                  ___floatsisf
+                  0x00029a                  ___floatunsisf
+                  0x00029e                  __funpack
+                  0x0002c8                  ___divsf3
+                  0x0002c8                  ___divsf3x
+                  0x00045a                  __sdivf
+                  0x000486                  ___mulsf3x
+                  0x000486                  ___mulsf3
+                  0x000592                  __dnrmpackf
+                  0x0005e6                  __unpackdnrmf
+                  0x000644                  __typef
+                  0x000678                  __propnanf
+                  0x00068a                  __spackf
+                  0x000730                  __unpackf
+                  0x000796                  ___floatdisf
+                  0x0007b6                  ___floatundisf
+                  0x000814                  __fpack
+                  0x000860                  _fontBIG
+                  0x000e10                  _font
+                  0x001210                  _AD_Xmin
+                  0x001212                  _AD_Xmax
+                  0x001214                  _AD_Ymin
+                  0x001216                  _AD_Ymax
+                  0x001218                  _tastatura
+                  0x0016ee                  _SetRST
+                  0x00170a                  _SetE
+                  0x001726                  _SetRW
+                  0x001742                  _SetRS
+                  0x00175e                  _SetCS2
+                  0x00177a                  _SetCS1
+                  0x001796                  _ConfigureLCDPins
+                  0x0017c4                  _ConfigureLcdData
+                  0x0017f8                  _SetLcdData
+                  0x001838                  _ReadLcdData
+                  0x001866                  _strobe_data
+                  0x001874                  _LcdInstructionWrite
+                  0x00188a                  _LcdDelay
+                  0x0018a6                  _LcdWaitBusy
+                  0x0018d0                  _GoToX
+                  0x00190a                  _GoToY
+                  0x001924                  _GoToXY
+                  0x00193a                  _LcdSelectStartline
+                  0x001948                  _LcdSelectSide
+                  0x001982                  _LcdDataRead
+                  0x0019b0                  _GLCD_LcdInit
+                  0x001a12                  _LcdDataWrite
+                  0x001a28                  _GLCD_ClrScr
+                  0x001a80                  _GLCD_FillScr
+                  0x001ad8                  _GLCD_DisplayPicture
+                  0x001b5a                  _LcdSetDot
+                  0x001ba8                  _LcdResDot
+                  0x001bf8                  _GLCD_Circle
+                  0x001d6c                  _GLCD_Rectangle
+                  0x001df6                  _Glcd_PutChar
+                  0x001e64                  _Glcd_PutCharBig
+                  0x001f20                  _GLCD_Printf
+                  0x001f3a                  _GLCD_ShowGreed
+                  0x001fd8                  _GLCD_Clr_Rectangle
+                  0x002062                  _main
+                  0x002192                  _Delay_ms
+                  0x0021a8                  _Delay_us
+                  0x0021be                  _Delay_500us
+                  0x0021d4                  _Delay
+                  0x0021f0                  _WriteNumberonGLCD
+                  0x00220a                  _PocetniEkran
+                  0x00222e                  _DnevniScreensaver
+                  0x002266                  _NocniScreensaver
+                  0x00229e                  _Buzzer
+                  0x0022c2                  _PirSenzor
+                  0x0022d8                  _TouchPanel
+                  0x002346                  _OcitajTaster
+                  0x00248a                  _ProveraSifre
+                  0x0025c4                  _OtvoriVrata
+                  0x0025e8                  _ZatvoriVrata
+                  0x00260c                  _InitUART1
+                  0x002626                  _WriteCharUART1
+                  0x00264e                  _WriteStringUART1
+                  0x00267e                  _WriteUART1dec2string
+                  0x002700                  _ConfigureADCPins
+                  0x002712                  _ADCinit
+                  0x002776                  _Init_T1
+                  0x002788                  _Init_T2
+                  0x00279a                  _Init_T3
                   0xf8000a                  __FGS.sec
 
 External Symbols in Program Memory (by name):
 
-                  0x002662                  _ADCinit
-                  0x001202                  _AD_Xmax
-                  0x001200                  _AD_Xmin
-                  0x001206                  _AD_Ymax
-                  0x001204                  _AD_Ymin
-                  0x002242                  _Buzzer
-                  0x002650                  _ConfigureADCPins
-                  0x0017a6                  _ConfigureLCDPins
-                  0x0017d4                  _ConfigureLcdData
-                  0x002178                  _Delay
-                  0x002154                  _Delay_ms
-                  0x002166                  _Delay_us
-                  0x0021d2                  _DnevniScreensaver
-                  0x001c08                  _GLCD_Circle
-                  0x001a38                  _GLCD_ClrScr
-                  0x001fe8                  _GLCD_Clr_Rectangle
-                  0x001ae8                  _GLCD_DisplayPicture
-                  0x001a90                  _GLCD_FillScr
-                  0x0019c0                  _GLCD_LcdInit
-                  0x001f30                  _GLCD_Printf
-                  0x001d7c                  _GLCD_Rectangle
-                  0x001f4a                  _GLCD_ShowGreed
-                  0x001e06                  _Glcd_PutChar
-                  0x001e74                  _Glcd_PutCharBig
-                  0x0018e0                  _GoToX
-                  0x001934                  _GoToXY
-                  0x00191a                  _GoToY
-                  0x00255c                  _InitUART1
-                  0x0026c6                  _Init_T1
-                  0x0026da                  _Init_T2
-                  0x001992                  _LcdDataRead
-                  0x001a22                  _LcdDataWrite
-                  0x00189a                  _LcdDelay
-                  0x001884                  _LcdInstructionWrite
-                  0x001bb8                  _LcdResDot
-                  0x001958                  _LcdSelectSide
-                  0x00194a                  _LcdSelectStartline
-                  0x001b6a                  _LcdSetDot
-                  0x0018b6                  _LcdWaitBusy
-                  0x00220a                  _NocniScreensaver
-                  0x0022c8                  _OcitajTaster
-                  0x002538                  _OtvoriVrata
-                  0x002264                  _PirSenzor
-                  0x0021ae                  _PocetniEkran
-                  0x00240c                  _ProveraSifre
-                  0x001848                  _ReadLcdData
-                  0x00178a                  _SetCS1
-                  0x00176e                  _SetCS2
-                  0x00171a                  _SetE
-                  0x001808                  _SetLcdData
-                  0x001752                  _SetRS
-                  0x0016fe                  _SetRST
-                  0x001736                  _SetRW
-                  0x00227a                  _TouchPanel
-                  0x002576                  _WriteCharUART1
-                  0x002194                  _WriteNumberonGLCD
-                  0x00259e                  _WriteStringUART1
-                  0x0025ce                  _WriteUART1dec2string
-                  0x00254a                  _ZatvoriVrata
-                  0x000200                  __ADCInterrupt
-                  0x000248                  __DefaultInterrupt
+                  0x002712                  _ADCinit
+                  0x001212                  _AD_Xmax
+                  0x001210                  _AD_Xmin
+                  0x001216                  _AD_Ymax
+                  0x001214                  _AD_Ymin
+                  0x00229e                  _Buzzer
+                  0x002700                  _ConfigureADCPins
+                  0x001796                  _ConfigureLCDPins
+                  0x0017c4                  _ConfigureLcdData
+                  0x0021d4                  _Delay
+                  0x0021be                  _Delay_500us
+                  0x002192                  _Delay_ms
+                  0x0021a8                  _Delay_us
+                  0x00222e                  _DnevniScreensaver
+                  0x001bf8                  _GLCD_Circle
+                  0x001a28                  _GLCD_ClrScr
+                  0x001fd8                  _GLCD_Clr_Rectangle
+                  0x001ad8                  _GLCD_DisplayPicture
+                  0x001a80                  _GLCD_FillScr
+                  0x0019b0                  _GLCD_LcdInit
+                  0x001f20                  _GLCD_Printf
+                  0x001d6c                  _GLCD_Rectangle
+                  0x001f3a                  _GLCD_ShowGreed
+                  0x001df6                  _Glcd_PutChar
+                  0x001e64                  _Glcd_PutCharBig
+                  0x0018d0                  _GoToX
+                  0x001924                  _GoToXY
+                  0x00190a                  _GoToY
+                  0x00260c                  _InitUART1
+                  0x002776                  _Init_T1
+                  0x002788                  _Init_T2
+                  0x00279a                  _Init_T3
+                  0x001982                  _LcdDataRead
+                  0x001a12                  _LcdDataWrite
+                  0x00188a                  _LcdDelay
+                  0x001874                  _LcdInstructionWrite
+                  0x001ba8                  _LcdResDot
+                  0x001948                  _LcdSelectSide
+                  0x00193a                  _LcdSelectStartline
+                  0x001b5a                  _LcdSetDot
+                  0x0018a6                  _LcdWaitBusy
+                  0x002266                  _NocniScreensaver
+                  0x002346                  _OcitajTaster
+                  0x0025c4                  _OtvoriVrata
+                  0x0022c2                  _PirSenzor
+                  0x00220a                  _PocetniEkran
+                  0x00248a                  _ProveraSifre
+                  0x001838                  _ReadLcdData
+                  0x00177a                  _SetCS1
+                  0x00175e                  _SetCS2
+                  0x00170a                  _SetE
+                  0x0017f8                  _SetLcdData
+                  0x001742                  _SetRS
+                  0x0016ee                  _SetRST
+                  0x001726                  _SetRW
+                  0x0022d8                  _TouchPanel
+                  0x002626                  _WriteCharUART1
+                  0x0021f0                  _WriteNumberonGLCD
+                  0x00264e                  _WriteStringUART1
+                  0x00267e                  _WriteUART1dec2string
+                  0x0025e8                  _ZatvoriVrata
+                  0x00021c                  __ADCInterrupt
+                  0x000258                  __DefaultInterrupt
                   0xf8000a                  __FGS.sec
                   0x0001c8                  __T1Interrupt
                   0x0001e4                  __T2Interrupt
-                  0x00022c                  __U1RXInterrupt
-                  0x0002b8                  ___divsf3
-                  0x0002b8                  ___divsf3x
-                  0x00024e                  ___fixunssfsi
-                  0x000786                  ___floatdisf
-                  0x000284                  ___floatsisf
-                  0x0007a6                  ___floatundisf
-                  0x00028a                  ___floatunsisf
-                  0x000476                  ___mulsf3
-                  0x000476                  ___mulsf3x
+                  0x000200                  __T3Interrupt
+                  0x00023e                  __U1RXInterrupt
+                  0x0002c8                  ___divsf3
+                  0x0002c8                  ___divsf3x
+                  0x00025e                  ___fixunssfsi
+                  0x000796                  ___floatdisf
+                  0x000294                  ___floatsisf
+                  0x0007b6                  ___floatundisf
+                  0x00029a                  ___floatunsisf
+                  0x000486                  ___mulsf3
+                  0x000486                  ___mulsf3x
                   0x000152                  __data_init
                   0x000152                  __data_init_standard
-                  0x000582                  __dnrmpackf
-                  0x000804                  __fpack
-                  0x00028e                  __funpack
-                  0x000668                  __propnanf
+                  0x000592                  __dnrmpackf
+                  0x000814                  __fpack
+                  0x00029e                  __funpack
+                  0x000678                  __propnanf
                   0x00013c                  __psv_init
                   0x000100                  __resetPRI
-                  0x00044a                  __sdivf
-                  0x00067a                  __spackf
-                  0x000634                  __typef
-                  0x0005d6                  __unpackdnrmf
-                  0x000720                  __unpackf
-                  0x000e00                  _font
-                  0x000850                  _fontBIG
-                  0x002072                  _main
-                  0x001876                  _strobe_data
-                  0x001208                  _tastatura
+                  0x00045a                  __sdivf
+                  0x00068a                  __spackf
+                  0x000644                  __typef
+                  0x0005e6                  __unpackdnrmf
+                  0x000730                  __unpackf
+                  0x000e10                  _font
+                  0x000860                  _fontBIG
+                  0x002062                  _main
+                  0x001866                  _strobe_data
+                  0x001218                  _tastatura
 
 Memory Configuration
 
@@ -452,7 +458,7 @@ LOAD c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libfx-elf.a
                   0x000002          0x2 SHORT 0x0 ((ABSOLUTE (__reset) >> 0x10) & 0x7f)
                   0x000003          0x2 SHORT 0x0
 
-.text             0x000100        0x750
+.text             0x000100        0x760
  *(.init)
  .init            0x000100         0x4c c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(crt0_standard.o)
                   0x000100                  __resetPRI
@@ -464,59 +470,60 @@ LOAD c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libfx-elf.a
  *(.user_init)
  *(.handle)
  *(.isr*)
- .isr.text        0x0001c8         0x80 build/default/production/newmain.o
+ .isr.text        0x0001c8         0x90 build/default/production/newmain.o
                   0x0001c8                  __T1Interrupt
                   0x0001e4                  __T2Interrupt
-                  0x000200                  __ADCInterrupt
-                  0x00022c                  __U1RXInterrupt
- .isr             0x000248          0x4 default_isr
-                  0x000248                  __DefaultInterrupt
+                  0x000200                  __T3Interrupt
+                  0x00021c                  __ADCInterrupt
+                  0x00023e                  __U1RXInterrupt
+ .isr             0x000258          0x4 default_isr
+                  0x000258                  __DefaultInterrupt
  *(.libc)
  *(.libm)
  *(.libdsp)
  *(.lib*)
  .libpic30_crt_start_mode
-                  0x00024c          0x2 c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(crt_start_mode_normal.Meo)
-                  0x00024c                  __crt_start_mode
-                  0x00024c                  __crt_start_mode_normal
+                  0x00025c          0x2 c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(crt_start_mode_normal.Meo)
+                  0x00025c                  __crt_start_mode
+                  0x00025c                  __crt_start_mode_normal
  .libm.fixunssfsi
-                  0x00024e         0x36 c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(fixunssfsi.XX_o)
-                  0x00024e                  ___fixunssfsi
+                  0x00025e         0x36 c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(fixunssfsi.XX_o)
+                  0x00025e                  ___fixunssfsi
  .libm.floatsisf
-                  0x000284          0x6 c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(floatsisf.XX_o)
-                  0x000284                  ___floatsisf
+                  0x000294          0x6 c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(floatsisf.XX_o)
+                  0x000294                  ___floatsisf
  .libm.floatunsisf
-                  0x00028a          0x4 c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(floatunsisf.XX_o)
-                  0x00028a                  ___floatunsisf
- .libm.funpack    0x00028e         0x2a c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(funpack.XX_o)
-                  0x00028e                  __funpack
- .libmx           0x0002b8        0x1be c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(divsf3x.XX_o)
-                  0x0002b8                  ___divsf3x
-                  0x0002b8                  ___divsf3
-                  0x00044a                  __sdivf
- .libmx           0x000476        0x10c c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(mulsf3x.XX_o)
-                  0x000476                  ___mulsf3x
-                  0x000476                  ___mulsf3
- .libmx           0x000582         0x54 c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(dnrmpackfx.XX_o)
-                  0x000582                  __dnrmpackf
- .libmx           0x0005d6         0x5e c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(unpackdnrmfx.XX_o)
-                  0x0005d6                  __unpackdnrmf
- .libmx           0x000634         0x34 c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(typefx.XX_o)
-                  0x000634                  __typef
- .libmx           0x000668         0x12 c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(propnanfx.XX_o)
-                  0x000668                  __propnanf
- .libmx           0x00067a         0xa6 c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(spackfx.XX_o)
-                  0x00067a                  __spackf
- .libmx           0x000720         0x66 c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(unpackfx.XX_o)
-                  0x000720                  __unpackf
+                  0x00029a          0x4 c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(floatunsisf.XX_o)
+                  0x00029a                  ___floatunsisf
+ .libm.funpack    0x00029e         0x2a c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(funpack.XX_o)
+                  0x00029e                  __funpack
+ .libmx           0x0002c8        0x1be c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(divsf3x.XX_o)
+                  0x0002c8                  ___divsf3x
+                  0x0002c8                  ___divsf3
+                  0x00045a                  __sdivf
+ .libmx           0x000486        0x10c c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(mulsf3x.XX_o)
+                  0x000486                  ___mulsf3x
+                  0x000486                  ___mulsf3
+ .libmx           0x000592         0x54 c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(dnrmpackfx.XX_o)
+                  0x000592                  __dnrmpackf
+ .libmx           0x0005e6         0x5e c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(unpackdnrmfx.XX_o)
+                  0x0005e6                  __unpackdnrmf
+ .libmx           0x000644         0x34 c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(typefx.XX_o)
+                  0x000644                  __typef
+ .libmx           0x000678         0x12 c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(propnanfx.XX_o)
+                  0x000678                  __propnanf
+ .libmx           0x00068a         0xa6 c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(spackfx.XX_o)
+                  0x00068a                  __spackf
+ .libmx           0x000730         0x66 c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(unpackfx.XX_o)
+                  0x000730                  __unpackf
  .libm.floatdisf
-                  0x000786         0x20 c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(floatdisf.XX_o)
-                  0x000786                  ___floatdisf
+                  0x000796         0x20 c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(floatdisf.XX_o)
+                  0x000796                  ___floatdisf
  .libm.floatundisf
-                  0x0007a6         0x5e c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(floatundisf.XX_o)
-                  0x0007a6                  ___floatundisf
- .libm.fpack      0x000804         0x4c c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(fpack.XX_o)
-                  0x000804                  __fpack
+                  0x0007b6         0x5e c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(floatundisf.XX_o)
+                  0x0007b6                  ___floatundisf
+ .libm.fpack      0x000814         0x4c c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(fpack.XX_o)
+                  0x000814                  __fpack
 
 usercode
  *(usercode)
@@ -552,7 +559,7 @@ __RESERVED2
 
 __FGS             0xf8000a          0x2
  *(__FGS.sec*)
- __FGS.sec        0xf8000a          0x2 /CW/_FGS
+ __FGS.sec        0xf8000a          0x2 /CW/_FGSP
                   0xf8000a                  __FGS.sec
 
 __FICD
@@ -567,92 +574,92 @@ userdata
 .comment
  *(.comment)
 
-.debug_info       0x000000       0x4613
+.debug_info       0x000000       0x4aab
  *(.debug_info)
  .debug_info      0x000000        0xfbf build/default/production/glcd.o
- .debug_info      0x000fbf       0x130e build/default/production/newmain.o
- .debug_info      0x0022cd        0x718 build/default/production/tajmer.o
- .debug_info      0x0029e5        0xd34 build/default/production/adc.o
- .debug_info      0x003719        0x620 build/default/production/uart.o
- .debug_info      0x003d39         0x90 c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(fixunssfsi.XX_o)
- .debug_info      0x003dc9         0x8f c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(floatsisf.XX_o)
- .debug_info      0x003e58         0x91 c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(floatunsisf.XX_o)
- .debug_info      0x003ee9         0x8d c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(funpack.XX_o)
- .debug_info      0x003f76         0x9d c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(divsf3x.XX_o)
- .debug_info      0x004013         0x9d c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(mulsf3x.XX_o)
- .debug_info      0x0040b0         0xa0 c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(dnrmpackfx.XX_o)
- .debug_info      0x004150         0xa2 c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(unpackdnrmfx.XX_o)
- .debug_info      0x0041f2         0x9c c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(typefx.XX_o)
- .debug_info      0x00428e         0x9f c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(propnanfx.XX_o)
- .debug_info      0x00432d         0x9d c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(spackfx.XX_o)
- .debug_info      0x0043ca         0x9e c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(unpackfx.XX_o)
- .debug_info      0x004468         0x8f c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(floatdisf.XX_o)
- .debug_info      0x0044f7         0x91 c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(floatundisf.XX_o)
- .debug_info      0x004588         0x8b c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(fpack.XX_o)
+ .debug_info      0x000fbf       0x1663 build/default/production/newmain.o
+ .debug_info      0x002622        0x85b build/default/production/tajmer.o
+ .debug_info      0x002e7d        0xd34 build/default/production/adc.o
+ .debug_info      0x003bb1        0x620 build/default/production/uart.o
+ .debug_info      0x0041d1         0x90 c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(fixunssfsi.XX_o)
+ .debug_info      0x004261         0x8f c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(floatsisf.XX_o)
+ .debug_info      0x0042f0         0x91 c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(floatunsisf.XX_o)
+ .debug_info      0x004381         0x8d c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(funpack.XX_o)
+ .debug_info      0x00440e         0x9d c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(divsf3x.XX_o)
+ .debug_info      0x0044ab         0x9d c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(mulsf3x.XX_o)
+ .debug_info      0x004548         0xa0 c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(dnrmpackfx.XX_o)
+ .debug_info      0x0045e8         0xa2 c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(unpackdnrmfx.XX_o)
+ .debug_info      0x00468a         0x9c c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(typefx.XX_o)
+ .debug_info      0x004726         0x9f c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(propnanfx.XX_o)
+ .debug_info      0x0047c5         0x9d c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(spackfx.XX_o)
+ .debug_info      0x004862         0x9e c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(unpackfx.XX_o)
+ .debug_info      0x004900         0x8f c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(floatdisf.XX_o)
+ .debug_info      0x00498f         0x91 c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(floatundisf.XX_o)
+ .debug_info      0x004a20         0x8b c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(fpack.XX_o)
  *(.gnu.linkonce.wi.*)
 
-.debug_abbrev     0x000000        0x71c
+.debug_abbrev     0x000000        0x73d
  *(.debug_abbrev)
  .debug_abbrev    0x000000        0x171 build/default/production/glcd.o
- .debug_abbrev    0x000171        0x215 build/default/production/newmain.o
- .debug_abbrev    0x000386         0xc5 build/default/production/tajmer.o
- .debug_abbrev    0x00044b         0xc5 build/default/production/adc.o
- .debug_abbrev    0x000510         0xe0 build/default/production/uart.o
- .debug_abbrev    0x0005f0         0x14 c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(fixunssfsi.XX_o)
- .debug_abbrev    0x000604         0x14 c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(floatsisf.XX_o)
- .debug_abbrev    0x000618         0x14 c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(floatunsisf.XX_o)
- .debug_abbrev    0x00062c         0x14 c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(funpack.XX_o)
- .debug_abbrev    0x000640         0x14 c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(divsf3x.XX_o)
- .debug_abbrev    0x000654         0x14 c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(mulsf3x.XX_o)
- .debug_abbrev    0x000668         0x14 c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(dnrmpackfx.XX_o)
- .debug_abbrev    0x00067c         0x14 c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(unpackdnrmfx.XX_o)
- .debug_abbrev    0x000690         0x14 c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(typefx.XX_o)
- .debug_abbrev    0x0006a4         0x14 c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(propnanfx.XX_o)
- .debug_abbrev    0x0006b8         0x14 c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(spackfx.XX_o)
- .debug_abbrev    0x0006cc         0x14 c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(unpackfx.XX_o)
- .debug_abbrev    0x0006e0         0x14 c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(floatdisf.XX_o)
- .debug_abbrev    0x0006f4         0x14 c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(floatundisf.XX_o)
- .debug_abbrev    0x000708         0x14 c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(fpack.XX_o)
+ .debug_abbrev    0x000171        0x221 build/default/production/newmain.o
+ .debug_abbrev    0x000392         0xda build/default/production/tajmer.o
+ .debug_abbrev    0x00046c         0xc5 build/default/production/adc.o
+ .debug_abbrev    0x000531         0xe0 build/default/production/uart.o
+ .debug_abbrev    0x000611         0x14 c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(fixunssfsi.XX_o)
+ .debug_abbrev    0x000625         0x14 c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(floatsisf.XX_o)
+ .debug_abbrev    0x000639         0x14 c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(floatunsisf.XX_o)
+ .debug_abbrev    0x00064d         0x14 c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(funpack.XX_o)
+ .debug_abbrev    0x000661         0x14 c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(divsf3x.XX_o)
+ .debug_abbrev    0x000675         0x14 c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(mulsf3x.XX_o)
+ .debug_abbrev    0x000689         0x14 c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(dnrmpackfx.XX_o)
+ .debug_abbrev    0x00069d         0x14 c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(unpackdnrmfx.XX_o)
+ .debug_abbrev    0x0006b1         0x14 c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(typefx.XX_o)
+ .debug_abbrev    0x0006c5         0x14 c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(propnanfx.XX_o)
+ .debug_abbrev    0x0006d9         0x14 c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(spackfx.XX_o)
+ .debug_abbrev    0x0006ed         0x14 c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(unpackfx.XX_o)
+ .debug_abbrev    0x000701         0x14 c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(floatdisf.XX_o)
+ .debug_abbrev    0x000715         0x14 c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(floatundisf.XX_o)
+ .debug_abbrev    0x000729         0x14 c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(fpack.XX_o)
 
-.debug_line       0x000000        0xed9
+.debug_line       0x000000        0xf20
  *(.debug_line)
  .debug_line      0x000000        0x2a1 build/default/production/glcd.o
- .debug_line      0x0002a1        0x214 build/default/production/newmain.o
- .debug_line      0x0004b5        0x10d build/default/production/tajmer.o
- .debug_line      0x0005c2        0x122 build/default/production/adc.o
- .debug_line      0x0006e4        0x120 build/default/production/uart.o
- .debug_line      0x000804         0x53 c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(fixunssfsi.XX_o)
- .debug_line      0x000857         0x3a c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(floatsisf.XX_o)
- .debug_line      0x000891         0x3b c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(floatunsisf.XX_o)
- .debug_line      0x0008cc         0x4a c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(funpack.XX_o)
- .debug_line      0x000916        0x124 c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(divsf3x.XX_o)
- .debug_line      0x000a3a         0xcc c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(mulsf3x.XX_o)
- .debug_line      0x000b06         0x72 c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(dnrmpackfx.XX_o)
- .debug_line      0x000b78         0x7a c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(unpackdnrmfx.XX_o)
- .debug_line      0x000bf2         0x5e c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(typefx.XX_o)
- .debug_line      0x000c50         0x51 c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(propnanfx.XX_o)
- .debug_line      0x000ca1         0x98 c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(spackfx.XX_o)
- .debug_line      0x000d39         0x79 c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(unpackfx.XX_o)
- .debug_line      0x000db2         0x1a c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(errno.XX_o)
- .debug_line      0x000dcc         0x47 c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(floatdisf.XX_o)
- .debug_line      0x000e13         0x6c c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(floatundisf.XX_o)
- .debug_line      0x000e7f         0x5a c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(fpack.XX_o)
+ .debug_line      0x0002a1        0x256 build/default/production/newmain.o
+ .debug_line      0x0004f7        0x112 build/default/production/tajmer.o
+ .debug_line      0x000609        0x122 build/default/production/adc.o
+ .debug_line      0x00072b        0x120 build/default/production/uart.o
+ .debug_line      0x00084b         0x53 c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(fixunssfsi.XX_o)
+ .debug_line      0x00089e         0x3a c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(floatsisf.XX_o)
+ .debug_line      0x0008d8         0x3b c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(floatunsisf.XX_o)
+ .debug_line      0x000913         0x4a c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(funpack.XX_o)
+ .debug_line      0x00095d        0x124 c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(divsf3x.XX_o)
+ .debug_line      0x000a81         0xcc c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(mulsf3x.XX_o)
+ .debug_line      0x000b4d         0x72 c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(dnrmpackfx.XX_o)
+ .debug_line      0x000bbf         0x7a c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(unpackdnrmfx.XX_o)
+ .debug_line      0x000c39         0x5e c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(typefx.XX_o)
+ .debug_line      0x000c97         0x51 c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(propnanfx.XX_o)
+ .debug_line      0x000ce8         0x98 c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(spackfx.XX_o)
+ .debug_line      0x000d80         0x79 c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(unpackfx.XX_o)
+ .debug_line      0x000df9         0x1a c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(errno.XX_o)
+ .debug_line      0x000e13         0x47 c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(floatdisf.XX_o)
+ .debug_line      0x000e5a         0x6c c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(floatundisf.XX_o)
+ .debug_line      0x000ec6         0x5a c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(fpack.XX_o)
 
-.debug_frame      0x000000        0x6de
+.debug_frame      0x000000        0x73c
  *(.debug_frame)
  .debug_frame     0x000000        0x388 build/default/production/glcd.o
- .debug_frame     0x000388        0x242 build/default/production/newmain.o
- .debug_frame     0x0005ca         0x48 build/default/production/tajmer.o
- .debug_frame     0x000612         0x48 build/default/production/adc.o
- .debug_frame     0x00065a         0x84 build/default/production/uart.o
+ .debug_frame     0x000388        0x286 build/default/production/newmain.o
+ .debug_frame     0x00060e         0x62 build/default/production/tajmer.o
+ .debug_frame     0x000670         0x48 build/default/production/adc.o
+ .debug_frame     0x0006b8         0x84 build/default/production/uart.o
 
-.debug_str        0x000000        0x1a7
+.debug_str        0x000000        0x1f3
  *(.debug_str)
  .debug_str       0x000000         0x70 build/default/production/glcd.o
- .debug_str       0x000070         0xa1 build/default/production/newmain.o
- .debug_str       0x000111         0x26 build/default/production/tajmer.o
- .debug_str       0x000137         0x52 build/default/production/adc.o
- .debug_str       0x000189         0x1e build/default/production/uart.o
+ .debug_str       0x000070         0xd5 build/default/production/newmain.o
+ .debug_str       0x000145         0x3e build/default/production/tajmer.o
+ .debug_str       0x000183         0x52 build/default/production/adc.o
+ .debug_str       0x0001d5         0x1e build/default/production/uart.o
 
 .debug_loc
  *(.debug_loc)
@@ -661,18 +668,18 @@ userdata
  *(.debug_macinfo)
 
 .debug_pubnames
-                  0x000000        0x5b4
+                  0x000000        0x5f2
  *(.debug_pubnames)
  .debug_pubnames
                   0x000000        0x267 build/default/production/glcd.o
  .debug_pubnames
-                  0x000267        0x28f build/default/production/newmain.o
+                  0x000267        0x2c1 build/default/production/newmain.o
  .debug_pubnames
-                  0x0004f6         0x2a build/default/production/tajmer.o
+                  0x000528         0x36 build/default/production/tajmer.o
  .debug_pubnames
-                  0x000520         0x33 build/default/production/adc.o
+                  0x00055e         0x33 build/default/production/adc.o
  .debug_pubnames
-                  0x000553         0x61 build/default/production/uart.o
+                  0x000591         0x61 build/default/production/uart.o
 
 .debug_ranges
  *(.debug_ranges)
@@ -1418,55 +1425,55 @@ LOAD c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libm-elf.a
 LOAD c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-elf.a
 END GROUP
 OUTPUT(dist/default/production/Bankomat.X.production.elf elf32-pic30)
-LOAD /CW/_FGS
+LOAD /CW/_FGSP
 LOAD default_isr
 LOAD data_init
 
 .debug_pubtypes
-                  0x0001e0        0x445
+                  0x0001e0        0x4b0
  .debug_pubtypes
                   0x0001e0         0x9d build/default/production/glcd.o
  .debug_pubtypes
-                  0x00027d        0x17a build/default/production/newmain.o
+                  0x00027d        0x1c6 build/default/production/newmain.o
  .debug_pubtypes
-                  0x0003f7         0x97 build/default/production/tajmer.o
+                  0x000443         0xb6 build/default/production/tajmer.o
  .debug_pubtypes
-                  0x00048e        0x11b build/default/production/adc.o
+                  0x0004f9        0x11b build/default/production/adc.o
  .debug_pubtypes
-                  0x0005a9         0x7c build/default/production/uart.o
+                  0x000614         0x7c build/default/production/uart.o
 
 __c30_signature
-                  0x000625         0x5a
+                  0x000690         0x5a
  __c30_signature
-                  0x000625          0x6 build/default/production/glcd.o
+                  0x000690          0x6 build/default/production/glcd.o
  __c30_signature
-                  0x00062b          0x6 build/default/production/newmain.o
+                  0x000696          0x6 build/default/production/newmain.o
  __c30_signature
-                  0x000631          0x6 build/default/production/tajmer.o
+                  0x00069c          0x6 build/default/production/tajmer.o
  __c30_signature
-                  0x000637          0x6 build/default/production/adc.o
+                  0x0006a2          0x6 build/default/production/adc.o
  __c30_signature
-                  0x00063d          0x6 build/default/production/uart.o
+                  0x0006a8          0x6 build/default/production/uart.o
  __c30_signature
-                  0x000643          0x6 c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(crt0_standard.o)
+                  0x0006ae          0x6 c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(crt0_standard.o)
  __c30_signature
-                  0x000649          0x6 c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(data_init_standard.o)
+                  0x0006b4          0x6 c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(data_init_standard.o)
  __c30_signature
-                  0x00064f          0x6 c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(fixunssfsi.XX_o)
+                  0x0006ba          0x6 c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(fixunssfsi.XX_o)
  __c30_signature
-                  0x000655          0x6 c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(floatsisf.XX_o)
+                  0x0006c0          0x6 c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(floatsisf.XX_o)
  __c30_signature
-                  0x00065b          0x6 c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(floatunsisf.XX_o)
+                  0x0006c6          0x6 c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(floatunsisf.XX_o)
  __c30_signature
-                  0x000661          0x6 c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(funpack.XX_o)
+                  0x0006cc          0x6 c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(funpack.XX_o)
  __c30_signature
-                  0x000667          0x6 c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(errno.XX_o)
+                  0x0006d2          0x6 c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(errno.XX_o)
  __c30_signature
-                  0x00066d          0x6 c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(floatdisf.XX_o)
+                  0x0006d8          0x6 c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(floatdisf.XX_o)
  __c30_signature
-                  0x000673          0x6 c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(floatundisf.XX_o)
+                  0x0006de          0x6 c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(floatundisf.XX_o)
  __c30_signature
-                  0x000679          0x6 c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(fpack.XX_o)
+                  0x0006e4          0x6 c:/program files/microchip/xc16/v2.00/bin/bin/../../lib\libc99-pic30-elf.a(fpack.XX_o)
 
 .nbss               0x0800         0x26
  .nbss              0x0800         0x26 build/default/production/newmain.o
@@ -1474,20 +1481,20 @@ __c30_signature
                     0x0802                  _Y
                     0x0804                  _x_vrednost
                     0x0806                  _y_vrednost
-                    0x0808                  _temp0
-                    0x080a                  _temp1
-                    0x080c                  _temp2
-                    0x080e                  _sirovi0
-                    0x0810                  _sirovi1
-                    0x0812                  _sirovi2
-                    0x0814                  _ms
-                    0x0816                  _us
-                    0x0818                  _stanje1
-                    0x081a                  _pritisnut_taster1
-                    0x081c                  _stanje2
-                    0x081e                  _pritisnut_taster2
-                    0x0820                  _stanje
-                    0x0822                  _tacna_sifra
+                    0x0808                  _sirovi0
+                    0x080a                  _sirovi1
+                    0x080c                  _sirovi2
+                    0x080e                  _ms
+                    0x0810                  _us
+                    0x0812                  _pola_milisekunde
+                    0x0814                  _stanje11
+                    0x0816                  _pritisnut_taster1
+                    0x0818                  _stanje12
+                    0x081a                  _pritisnut_taster2
+                    0x081c                  _stanje1
+                    0x081e                  _stanje2
+                    0x0820                  _tacna_sifra
+                    0x0822                  _taster
                     0x0824                  _tempRX
 
 .ndata              0x0826          0x8
@@ -1512,6 +1519,11 @@ __c30_signature
  .ivt._T2Interrupt
                   0x000020          0x2 build/default/production/newmain.o
 
+.ivt._T3Interrupt
+                  0x000022          0x2
+ .ivt._T3Interrupt
+                  0x000022          0x2 build/default/production/newmain.o
+
 .ivt._ADCInterrupt
                   0x00002a          0x2
  .ivt._ADCInterrupt
@@ -1522,80 +1534,82 @@ __c30_signature
  .ivt._U1RXInterrupt
                   0x000026          0x2 build/default/production/newmain.o
 
-.const              0x8850        0xeae load address 0x000850  
- .const             0x8850        0x9b0 build/default/production/glcd.o
-                    0x8850                  _fontBIG
-                    0x8e00                  _font
- .const             0x9200        0x4fe build/default/production/newmain.o
-                    0x9200                  _AD_Xmin
-                    0x9202                  _AD_Xmax
-                    0x9204                  _AD_Ymin
-                    0x9206                  _AD_Ymax
-                    0x9208                  _tastatura
+.const              0x8860        0xe8e load address 0x000860  
+ .const             0x8860        0x9b0 build/default/production/glcd.o
+                    0x8860                  _fontBIG
+                    0x8e10                  _font
+ .const             0x9210        0x4de build/default/production/newmain.o
+                    0x9210                  _AD_Xmin
+                    0x9212                  _AD_Xmax
+                    0x9214                  _AD_Ymin
+                    0x9216                  _AD_Ymax
+                    0x9218                  _tastatura
 
-.text             0x0016fe        0xff0
- .text            0x0016fe        0x974 build/default/production/glcd.o
-                  0x0016fe                  _SetRST
-                  0x00171a                  _SetE
-                  0x001736                  _SetRW
-                  0x001752                  _SetRS
-                  0x00176e                  _SetCS2
-                  0x00178a                  _SetCS1
-                  0x0017a6                  _ConfigureLCDPins
-                  0x0017d4                  _ConfigureLcdData
-                  0x001808                  _SetLcdData
-                  0x001848                  _ReadLcdData
-                  0x001876                  _strobe_data
-                  0x001884                  _LcdInstructionWrite
-                  0x00189a                  _LcdDelay
-                  0x0018b6                  _LcdWaitBusy
-                  0x0018e0                  _GoToX
-                  0x00191a                  _GoToY
-                  0x001934                  _GoToXY
-                  0x00194a                  _LcdSelectStartline
-                  0x001958                  _LcdSelectSide
-                  0x001992                  _LcdDataRead
-                  0x0019c0                  _GLCD_LcdInit
-                  0x001a22                  _LcdDataWrite
-                  0x001a38                  _GLCD_ClrScr
-                  0x001a90                  _GLCD_FillScr
-                  0x001ae8                  _GLCD_DisplayPicture
-                  0x001b6a                  _LcdSetDot
-                  0x001bb8                  _LcdResDot
-                  0x001c08                  _GLCD_Circle
-                  0x001d7c                  _GLCD_Rectangle
-                  0x001e06                  _Glcd_PutChar
-                  0x001e74                  _Glcd_PutCharBig
-                  0x001f30                  _GLCD_Printf
-                  0x001f4a                  _GLCD_ShowGreed
-                  0x001fe8                  _GLCD_Clr_Rectangle
- .text            0x002072        0x4ea build/default/production/newmain.o
-                  0x002072                  _main
-                  0x002154                  _Delay_ms
-                  0x002166                  _Delay_us
-                  0x002178                  _Delay
-                  0x002194                  _WriteNumberonGLCD
-                  0x0021ae                  _PocetniEkran
-                  0x0021d2                  _DnevniScreensaver
-                  0x00220a                  _NocniScreensaver
-                  0x002242                  _Buzzer
-                  0x002264                  _PirSenzor
-                  0x00227a                  _TouchPanel
-                  0x0022c8                  _OcitajTaster
-                  0x00240c                  _ProveraSifre
-                  0x002538                  _OtvoriVrata
-                  0x00254a                  _ZatvoriVrata
- .text            0x00255c         0xf4 build/default/production/uart.o
-                  0x00255c                  _InitUART1
-                  0x002576                  _WriteCharUART1
-                  0x00259e                  _WriteStringUART1
-                  0x0025ce                  _WriteUART1dec2string
- .text            0x002650         0x76 build/default/production/adc.o
-                  0x002650                  _ConfigureADCPins
-                  0x002662                  _ADCinit
- .text            0x0026c6         0x28 build/default/production/tajmer.o
-                  0x0026c6                  _Init_T1
-                  0x0026da                  _Init_T2
+.text             0x0016ee       0x10be
+ .text            0x0016ee        0x974 build/default/production/glcd.o
+                  0x0016ee                  _SetRST
+                  0x00170a                  _SetE
+                  0x001726                  _SetRW
+                  0x001742                  _SetRS
+                  0x00175e                  _SetCS2
+                  0x00177a                  _SetCS1
+                  0x001796                  _ConfigureLCDPins
+                  0x0017c4                  _ConfigureLcdData
+                  0x0017f8                  _SetLcdData
+                  0x001838                  _ReadLcdData
+                  0x001866                  _strobe_data
+                  0x001874                  _LcdInstructionWrite
+                  0x00188a                  _LcdDelay
+                  0x0018a6                  _LcdWaitBusy
+                  0x0018d0                  _GoToX
+                  0x00190a                  _GoToY
+                  0x001924                  _GoToXY
+                  0x00193a                  _LcdSelectStartline
+                  0x001948                  _LcdSelectSide
+                  0x001982                  _LcdDataRead
+                  0x0019b0                  _GLCD_LcdInit
+                  0x001a12                  _LcdDataWrite
+                  0x001a28                  _GLCD_ClrScr
+                  0x001a80                  _GLCD_FillScr
+                  0x001ad8                  _GLCD_DisplayPicture
+                  0x001b5a                  _LcdSetDot
+                  0x001ba8                  _LcdResDot
+                  0x001bf8                  _GLCD_Circle
+                  0x001d6c                  _GLCD_Rectangle
+                  0x001df6                  _Glcd_PutChar
+                  0x001e64                  _Glcd_PutCharBig
+                  0x001f20                  _GLCD_Printf
+                  0x001f3a                  _GLCD_ShowGreed
+                  0x001fd8                  _GLCD_Clr_Rectangle
+ .text            0x002062        0x5aa build/default/production/newmain.o
+                  0x002062                  _main
+                  0x002192                  _Delay_ms
+                  0x0021a8                  _Delay_us
+                  0x0021be                  _Delay_500us
+                  0x0021d4                  _Delay
+                  0x0021f0                  _WriteNumberonGLCD
+                  0x00220a                  _PocetniEkran
+                  0x00222e                  _DnevniScreensaver
+                  0x002266                  _NocniScreensaver
+                  0x00229e                  _Buzzer
+                  0x0022c2                  _PirSenzor
+                  0x0022d8                  _TouchPanel
+                  0x002346                  _OcitajTaster
+                  0x00248a                  _ProveraSifre
+                  0x0025c4                  _OtvoriVrata
+                  0x0025e8                  _ZatvoriVrata
+ .text            0x00260c         0xf4 build/default/production/uart.o
+                  0x00260c                  _InitUART1
+                  0x002626                  _WriteCharUART1
+                  0x00264e                  _WriteStringUART1
+                  0x00267e                  _WriteUART1dec2string
+ .text            0x002700         0x76 build/default/production/adc.o
+                  0x002700                  _ConfigureADCPins
+                  0x002712                  _ADCinit
+ .text            0x002776         0x36 build/default/production/tajmer.o
+                  0x002776                  _Init_T1
+                  0x002788                  _Init_T2
+                  0x00279a                  _Init_T3
 
-.dinit            0x0026ee         0x20
- .dinit           0x0026ee         0x20 data_init
+.dinit            0x0027ac         0x20
+ .dinit           0x0027ac         0x20 data_init

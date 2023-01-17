@@ -16,7 +16,7 @@ void ConfigureADCPins(void)
 	
 	TRISBbits.TRISB8=1;
 	TRISBbits.TRISB9=1;
-        TRISBbits.TRISB10=1;
+        TRISBbits.TRISB10=1; // za MQ3 senzor
 }
 
 void ADCinit(void)

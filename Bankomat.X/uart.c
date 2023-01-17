@@ -10,7 +10,7 @@
 
 void InitUART1(void)
 {
-    U1BRG=0x0040;// baudrate = 9600 jer je F=3.33MHz U1BRG=21
+    U1BRG=0x0015;// baudrate = 9600 jer je F=3.33MHz U1BRG=21
     U1MODEbits.ALTIO=0;// alternativni pinovi su zauzeti
     IEC0bits.U1RXIE=1;//omogucavamo rx1 interupt
     U1STA&=0xfffc; // zadnja 2 bita se setuju na 0 (bit za signalizaciju podataka u baferu i bit za gresku)

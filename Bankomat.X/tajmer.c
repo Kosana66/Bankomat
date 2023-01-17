@@ -8,13 +8,17 @@
 #include <p30fxxxx.h>
 #include "tajmer.h"
 
-#define TMR1_period 10000 
-//  Fosc = 10MHz
-// 1/Fosc = 0.1us !!!, 0.1us * 10000 = 1ms  
+#define TMR1_period 3000 
+//  Fosc = 3.33MHz
+// 1/Fosc = 0.33us !!!, 0.33us * 3000 = 1ms  
 
-#define TMR2_period 10 
-//  Fosc = 10MHz
-// 1/Fosc = 0.1us !!!, 0.1us * 10 = 1us 
+#define TMR2_period 3 
+//  Fosc = 3.33MHz
+// 1/Fosc = 0.33us !!!, 0.33us * 3 = 1us 
+
+#define TMR3_period 300
+//  Fosc = 3.33MHz
+// 1/Fosc = 0.33us !!!, 0.33us * 300 = 0.1ms
 
 void Init_T1(void)
 {
@@ -27,7 +31,7 @@ void Init_T1(void)
 	IFS0bits.T1IF = 0; // clear interrupt flag
 	IEC0bits.T1IE = 1; // enable interrupt
 
-	T1CONbits.TON = 1; // T1 on 
+//	T1CONbits.TON = 1; // T1 on 
 }
 
 void Init_T2(void)
@@ -41,5 +45,19 @@ void Init_T2(void)
 	IFS0bits.T2IF = 0; // clear interrupt flag
 	IEC0bits.T2IE = 1; // enable interrupt
 
-	T2CONbits.TON = 1; // T1 on 
+//	T2CONbits.TON = 1; // T1 on 
+}
+
+void Init_T3(void)
+{
+	TMR3 = 0;
+	PR3 = TMR3_period;
+	
+	T3CONbits.TCS = 0; // 0 = Internal clock (FOSC/4)
+	//IPC1bits.T1IP = 3 // T12 interrupt priority (0-7)
+	//SRbits.IPL = 3; // CPU interrupt priority is 3(11)
+	IFS0bits.T3IF = 0; // clear interrupt flag
+	IEC0bits.T3IE = 1; // enable interrupt
+
+//	T2CONbits.TON = 1; // T1 on 
 }

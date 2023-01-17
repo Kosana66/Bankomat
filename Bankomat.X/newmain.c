@@ -12,7 +12,7 @@
 #include "adc.h"
 #include "uart.h"
 
-_FOSC(CSW_ON_FSCM_OFF & XT_PLL4);//instruction takt je isti kao i kristal
+_FOSC(CSW_FSCM_OFF & HS3_PLL4);//instruction takt je isti kao i kristal
 //_FOSC(CSW_FSCM_OFF & XT);//deli sa 4
 _FWDT(WDT_OFF);
 _FGS(CODE_PROT_OFF);
@@ -21,21 +21,24 @@ _FGS(CODE_PROT_OFF);
 #define DRIVE_B PORTCbits.RC14
 
 unsigned int X, Y, x_vrednost, y_vrednost;
-const unsigned int AD_Xmin =233;
-const unsigned int AD_Xmax =3626;
+const unsigned int AD_Xmin =234;
+const unsigned int AD_Xmax =3612;
 const unsigned int AD_Ymin =310;
-const unsigned int AD_Ymax =3515;
+const unsigned int AD_Ymax =3580;
 
-unsigned int temp0, temp1, temp2, sirovi0, sirovi1, sirovi2; 
+unsigned int sirovi0, sirovi1, sirovi2; 
 
-int ms, us;
-int stanje1, pritisnut_taster1, stanje2, pritisnut_taster2;
+int ms, us, pola_milisekunde;
+int stanje11, pritisnut_taster1, stanje12, pritisnut_taster2;
 
 // definisanje stanja za unos pina 
-enum STATE {START, TASTER2, TASTER3, TASTER4, KRAJ};
-enum STATE stanje;
+enum STATE1 {START, TASTER2, TASTER3, TASTER4, END};
+enum STATE1 stanje1;
 
-int tacna_sifra;
+enum STATE2 {pocetak, s1, s2, s3, kraj};
+enum STATE2 stanje2;
+
+int tacna_sifra, taster;
 // SIFRA:
 int password[4] = {9, 6, 3, 0};
 
@@ -116,6 +119,7 @@ const char tastatura [1024] = {
 // prekidna rutina za tajmer 1
 void __attribute__ ((__interrupt__)) _T1Interrupt(void) // svakih 1ms
 {
+   // WriteStringUART1("TAJMER 1 PREKID \n");
     TMR1 = 0;
     ms++;
     IFS0bits.T1IF = 0;     
@@ -124,22 +128,30 @@ void __attribute__ ((__interrupt__)) _T1Interrupt(void) // svakih 1ms
 // prekidna rutina za tajmer 2
 void __attribute__ ((__interrupt__)) _T2Interrupt(void) // svakih 1us
 {
+  //  WriteStringUART1("TAJMER 2 PREKID \n");
     TMR2 = 0;
     us++;
     IFS0bits.T2IF = 0;     
 }
 
+// prekidna rutina za tajmer 3
+void __attribute__ ((__interrupt__)) _T3Interrupt(void) // svakih 0.1us
+{
+  //  WriteStringUART1("TAJMER 3 PREKID \n");
+    TMR3 = 0;
+    pola_milisekunde++;
+    IFS0bits.T3IF = 0;     
+}
+
 // prekidna rutina za AD konverziju
 void __attribute__((__interrupt__)) _ADCInterrupt(void) 
 {
+  //  WriteStringUART1("ADC PREKID\n");
     sirovi0=ADCBUF0;//0
     sirovi1=ADCBUF1;//1
-    sirovi2=ADCBUF2;
-             
-    temp0=sirovi0;
-    temp1=sirovi1;
-    temp2=sirovi2;
-    
+    sirovi2=ADCBUF2; // za mq3
+ 
+    ADCON1bits.ADON=0;
     IFS0bits.ADIF = 0;
 } 
 
@@ -147,7 +159,6 @@ void __attribute__((__interrupt__)) _ADCInterrupt(void)
 void __attribute__((__interrupt__)) _U1RXInterrupt(void) 
 {
     IFS0bits.U1RXIF = 0;
-    tempRX = 0;
     tempRX=U1RXREG;
 } 
 
@@ -156,6 +167,7 @@ void __attribute__((__interrupt__)) _U1RXInterrupt(void)
 /*************************************************************/
 void Delay_ms (int vreme);
 void Delay_us (int vreme);
+void Delay_500us (int vreme);
 void Delay(unsigned int N);
 
 /*************************************************************/
@@ -203,7 +215,6 @@ int main(int argc, char** argv) {
     // za servo motor
     ADPCFGbits.PCFG11=1; // digitalni
     TRISBbits.TRISB11=0;// izlaz za pwm
-    TRISCbits.TRISC15=1; // ulaz za taster kojim se bira zatvaraju vrata
      
     // za buzzer
     TRISAbits.TRISA11=0;// izlaz za pwm
@@ -211,72 +222,102 @@ int main(int argc, char** argv) {
     // za touch srceen
     ConfigureADCPins(); // ovim se konfigurisao i pin RB10 za MQ3 senzor
     ADCinit();
-    ADCON1bits.ADON=1;
+    ADCON1bits.ADON=0;
     TRISCbits.TRISC13=0;
     TRISCbits.TRISC14=0;
-    stanje = START;
+    stanje1 = START;
    
     // za tajmere
     Init_T1();
     Init_T2();
-    
+    Init_T3();
+    ZatvoriVrata();
     // za uart
     InitUART1();
-    tempRX=0;
+    tempRX=48;
+    WriteStringUART1("init\n");
     
-    DnevniScreensaver();
-    while(!PirSenzor()); 
-    GLCD_ClrScr();
-    PocetniEkran();
-    
+    stanje2=pocetak;
+        
     while(1)
     {
-       
-        TouchPanel();
-        if(ProveraSifre()==1)
+        switch(stanje2)
         {
-            GLCD_ClrScr();
-            GoToXY(35,4);
-            GLCD_Printf("TACAN PIN");
-            while(tempRX==0);
-            GoToXY(35,5);
-            WriteNumberonGLCD(tempRX);
-            WriteStringUART1("Izaberite:\n");
-            WriteStringUART1("1.UPLATA\n");
-            WriteStringUART1("2.ISPLATA\n\n");
-            while(tempRX!=1 && tempRX!=2);
-            if(tempRX==1)   
-            {
-                WriteStringUART1("---> Korisnik je pritisnuo uplatu\n");
+            case pocetak:
+                //fali implementacija fotootpornika
+                DnevniScreensaver();
+                while(!PirSenzor()); 
+            //      WriteStringUART1("pir senzor dobar\n");
+                stanje2=s1;
                 GLCD_ClrScr();
-                GoToXY(35,4);
-                GLCD_Printf("UPLATA");
-            }
-            if(tempRX==2)  
-            {
-                WriteStringUART1("---> Korisnik je pritisnuo isplatu\n");
+                PocetniEkran();
+            //      WriteStringUART1("tastatura\n");
+            break;
+        
+            case s1:
+                TouchPanel();
+                if(ProveraSifre()==1)
+                {
+                    GLCD_ClrScr();
+                    GoToXY(35,4);
+                    GLCD_Printf("TACAN PIN");
+                    stanje2=s2;
+                }
+            break;
+        
+            case s2:
+                ADCON1bits.ADON=1;
+                Delay_ms(10);
+            //    WriteUART1dec2string(sirovi2);
+                if(sirovi2>1500)
+                { 
+                    WriteStringUART1("Pijani ste! \n");
+                    stanje2=pocetak;
+                }
+                else
+                    stanje2=s3;    
+            break;
+            
+            case s3:
+                WriteStringUART1("Izaberite:\n");
+                WriteStringUART1("  1. UPLATA\n");
+                WriteStringUART1("  2. ISPLATA\n\n");
+                while(tempRX!=49 && tempRX!=50);
+                if(tempRX==49)   
+                {
+                    GLCD_ClrScr();
+                    GoToXY(35,4);
+                    GLCD_Printf("UPLATA");
+                    stanje2=kraj;
+                }
+                if(tempRX==50)  
+                {
+                    GLCD_ClrScr();
+                    GoToXY(35,4);
+                    GLCD_Printf("ISPLATA");
+                    stanje2=kraj;
+                }
+                tempRX=48;
+            break;
+                
+            case kraj:
+                OtvoriVrata();
+                Delay_ms(500);
+                ZatvoriVrata();
+
                 GLCD_ClrScr();
-                GoToXY(35,4);
-                GLCD_Printf("ISPLATA");
-            }
-            tempRX=0;
-            OtvoriVrata();
-            Delay_ms(10000);
-            ZatvoriVrata();
-            GLCD_ClrScr();
-            GoToXY(25,3);
-            GLCD_Printf("Hvala Vam sto");
-            GoToXY(25,4);
-            GLCD_Printf("koristite nas");
-            GoToXY(40,5);
-            GLCD_Printf("bankomat");
-            Delay_ms(5000);
-            GLCD_ClrScr();
-            PocetniEkran();
-        } 
+                GoToXY(25,3);
+                GLCD_Printf("Hvala Vam sto");
+                GoToXY(25,4);
+                GLCD_Printf("koristite nas");
+                GoToXY(40,5);
+                GLCD_Printf("bankomat");
+                Delay_ms(5000);
+                GLCD_ClrScr();
+                stanje2=pocetak;
+            break;
+        }
     }
-    
-    
     return (EXIT_SUCCESS);
 }
 
@@ -288,14 +329,27 @@ int main(int argc, char** argv) {
 void Delay_ms (int vreme)
 {
     ms = 0;
+    T1CONbits.TON = 1;
     while(ms < vreme);
+    T1CONbits.TON = 0;
 }
 
 // funkcija za kasnjenje u mikrosekundama
 void Delay_us (int vreme)
 {
     us = 0;
+    T2CONbits.TON = 1;
     while(us < vreme);
+    T2CONbits.TON = 0;
+}
+
+// funkcija za kasnjenje u 0.1 milisekundi
+void Delay_500us (int vreme)
+{
+    pola_milisekunde = 0;
+    T3CONbits.TON = 1;
+    while(pola_milisekunde < vreme);
+    T3CONbits.TON = 0;
 }
 
 // f-ja za kasnjenje
@@ -356,12 +410,14 @@ void NocniScreensaver()
 // f-ja za buzzer
 void Buzzer()
 {
-    for(int n=0; n<300; n++)
+    unsigned int n;
+    for(n=0; n<300; n++)
     {
         LATAbits.LATA11 = 1;
         Delay_us(100);
         LATAbits.LATA11 = 0;
         Delay_us(900);
+        LATAbits.LATA11 = 1;
     }
 }
 
@@ -377,44 +433,53 @@ int PirSenzor()
 // f-ja za ocitavanje polozaja pritiska na touch panelu
 void TouchPanel (void)
 {
+    
 // vode horizontalni tranzistori
     DRIVE_A = 1;  
     DRIVE_B = 0;
-    
-    LATCbits.LATC13=1;
-    LATCbits.LATC14=0;
-
-    Delay(500); //cekamo jedno vreme da se odradi AD konverzija
+  
+    ADCON1bits.ADON=1;
+    Delay_ms(10); //cekamo jedno vreme da se odradi AD konverzija
 				
     // ocitavamo x	
-    x_vrednost = temp0;//temp0 je vrednost koji nam daje AD konvertor na BOTTOM pinu		
+    x_vrednost = sirovi0;//temp0 je vrednost koji nam daje AD konvertor na BOTTOM pinu		
 
+    //skaliranje x-koordinate
+    X=(x_vrednost-234)*0.03789;
+    // X= ((x_vrednost-AD_Xmin)/(AD_Xmax-AD_Xmin))*128;	
+//vrednosti AD_Xmin i AD_Xmax su minimalne i maksimalne vrednosti koje daje AD konvertor za touch panel.
+    
+   
 // vode vertikalni tranzistori
 
     DRIVE_A = 0;  
     DRIVE_B = 1;
-    
-    LATCbits.LATC13=0;
-    LATCbits.LATC14=1;
 
-    Delay(500); //cekamo jedno vreme da se odradi AD konverzija
+    ADCON1bits.ADON=1;
+    Delay_ms(10); //cekamo jedno vreme da se odradi AD konverzija
 	
     // ocitavamo y	
-    y_vrednost = temp1;// temp1 je vrednost koji nam daje AD konvertor na LEFT pinu	
-	
-//Ako ?elimo da nam X i Y koordinate budu kao rezolucija ekrana 128x64 treba skalirati vrednosti x_vrednost i y_vrednost tako da budu u opsegu od 0-128 odnosno 0-64
-//skaliranje x-koordinate
-    X=(x_vrednost-233)*0.03772;
-    // X= ((x_vrednost-AD_Xmin)/(AD_Xmax-AD_Xmin))*128;	
-//vrednosti AD_Xmin i AD_Xmax su minimalne i maksimalne vrednosti koje daje AD konvertor za touch panel.
-//Skaliranje y-koordinate
-    Y=(y_vrednost-310)*0.01997;
+    y_vrednost = sirovi1;// temp1 je vrednost koji nam daje AD konvertor na LEFT pinu	
+
+    //skaliranje y-koordinate
+    Y=(y_vrednost-310)*0.01957;
     // Y= ((y_vrednost-AD_Ymin)/(AD_Ymax-AD_Ymin))*64;
+  
+    taster=OcitajTaster();
+    WriteStringUART1("X");
+    WriteCharUART1(' ');
+    WriteUART1dec2string(X);
+    WriteStringUART1("Y");
+    WriteCharUART1(' ');
+    WriteUART1dec2string(Y);
+    WriteStringUART1("      ");
+    WriteStringUART1("\n");
 }
 
 // f-ja ocitavanja pritisnutog tastera
 int OcitajTaster()
 {
+  //  WriteStringUART1("ocitavanje tastera\n");
     if((17<X)&&(X<31) && (0<Y)&&(Y<15))   return 0;
     if((32<X)&&(X<46) && (16<Y)&&(Y<31))  return 9;
     if((17<X)&&(X<31) && (16<Y)&&(Y<31))  return 8;
@@ -431,8 +496,9 @@ int OcitajTaster()
 // f-ja proveru tacnog pina
 int ProveraSifre()
 {
+  //  WriteStringUART1("provera sifre\n");
     tacna_sifra=0;
-    switch(stanje)
+    switch(stanje1)
         {
             case START:
                 if(OcitajTaster() != 10)   
@@ -440,15 +506,14 @@ int ProveraSifre()
                     GoToXY(70,5);
                     WriteNumberonGLCD(OcitajTaster());
                 }
-		if(OcitajTaster() == password[0])   stanje = TASTER2;
+		if(OcitajTaster() == password[0])   stanje1 = TASTER2;
                 if(OcitajTaster() != 10 && OcitajTaster() !=password[0])    
                 {
-                    stanje = START;
+                    stanje1 = START;
                     Buzzer(); 
                     GLCD_ClrScr();
                     PocetniEkran(); 
                 } 
-                Delay_ms(30);
             break;
 					
             case TASTER2:
@@ -457,15 +522,14 @@ int ProveraSifre()
                     GoToXY(80,5);
                     WriteNumberonGLCD(OcitajTaster());
                 }
-                if(OcitajTaster() == password[1])   stanje = TASTER3;
+                if(OcitajTaster() == password[1])   stanje1 = TASTER3;
                 if(OcitajTaster() != 10 && OcitajTaster() !=password[1])    
                 {
-                    stanje = START;
+                    stanje1 = START;
                     Buzzer(); 
                     GLCD_ClrScr();
                     PocetniEkran(); 
                 } 
-                Delay_ms(30);
             break;
                        
             case TASTER3:
@@ -474,15 +538,14 @@ int ProveraSifre()
                     GoToXY(90,5);
                     WriteNumberonGLCD(OcitajTaster());
                 }
-                if(OcitajTaster() == password[2]) stanje = TASTER4;
+                if(OcitajTaster() == password[2]) stanje1 = TASTER4;
                 if(OcitajTaster() != 10 && OcitajTaster() !=password[2])    
                 {
-                    stanje = START;
+                    stanje1 = START;
                     Buzzer(); 
                     GLCD_ClrScr();
                     PocetniEkran(); 
                 } 
-                Delay_ms(30);
             break;
                     
             case TASTER4:
@@ -491,20 +554,19 @@ int ProveraSifre()
                     GoToXY(100,5);
                     WriteNumberonGLCD(OcitajTaster());
                 }
-                if(OcitajTaster() == password[3]) stanje = KRAJ;
+                if(OcitajTaster() == password[3]) stanje1 = END;
                 if(OcitajTaster() != 10 && OcitajTaster() !=password[3])    
                 {
-                    stanje = START;
+                    stanje1 = START;
                     Buzzer(); 
                     GLCD_ClrScr();
                     PocetniEkran(); 
                 } 
-                Delay_ms(30);
             break;
             
-            case KRAJ:
+            case END:
                 tacna_sifra = 1;
-                stanje = START;
+                stanje1 = START;
             break;
         }
     return tacna_sifra;
@@ -513,17 +575,27 @@ int ProveraSifre()
 // f-ja za otvaranje vrata pomocu servo motora ( -90 stepeni )
 void OtvoriVrata()
 {
-    LATBbits.LATB11 = 1;
-    Delay_ms(2);
-    LATBbits.LATB11 = 0;
-    Delay_ms(18);
+    unsigned int n;
+    for(n=0; n<150; n++)
+    {
+        LATBbits.LATB11 = 1;
+        Delay_ms(2);
+        LATBbits.LATB11 = 0;
+        Delay_ms(18);
+        LATBbits.LATB11 = 1;
+    }
 }
 
 // f-ja za zatvaranje vrata pomocu servo motora ( 90 stepeni )   
 void ZatvoriVrata()
 {
-    LATBbits.LATB11 = 1;
-    Delay_ms(1);
-    LATBbits.LATB11 = 0;
-    Delay_ms(19);
+    unsigned int n;
+    for(n=0; n<150; n++)
+    {
+        LATBbits.LATB11 = 1;
+        Delay_ms(1);
+        LATBbits.LATB11 = 0;
+        Delay_ms(19);
+        LATBbits.LATB11 = 1;
+    }
 }
