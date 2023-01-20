@@ -10,10 +10,12 @@
 
 void ConfigureADCPins(void)
 {
+        ADPCFGbits.PCFG6=0;
 	ADPCFGbits.PCFG8=0;
 	ADPCFGbits.PCFG9=0;
         ADPCFGbits.PCFG10=0;
 	
+        TRISBbits.TRISB6=1; // za fotootpornik
 	TRISBbits.TRISB8=1;
 	TRISBbits.TRISB9=1;
         TRISBbits.TRISB10=1; // za MQ3 senzor
@@ -120,7 +122,7 @@ bit 0 ALTS: Alternate Input Sample Mode Select bit
 
 ADCON2bits.VCFG=7;
 ADCON2bits.CSCNA=1;
-ADCON2bits.SMPI=2;
+ADCON2bits.SMPI=3;
 ADCON2bits.BUFM=0;
 ADCON2bits.ALTS=0;
 
@@ -189,7 +191,7 @@ bit 15-0 CSSL<15:0>: A/D Input Pin Scan Selection bits
 	1 = Select ANx for input scan
 	0 = Skip ANx for input scan*/
 //ADCSSL=0b0001111111111111;
-  ADCSSL=0b0000011100000000;
+  ADCSSL=0b0000011101000000;
 ADCON1bits.ASAM=1;
 
 IFS0bits.ADIF=1;
