@@ -287,7 +287,7 @@ int main(int argc, char** argv) {
                 
             case kraj:
                 OtvoriVrata();
-                Delay_ms(2000);
+                Delay_ms(10000);
                 ZatvoriVrata();
 
                 GLCD_ClrScr();
