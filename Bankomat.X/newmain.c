@@ -20,9 +20,9 @@ _FGS(CODE_PROT_OFF);
 #define DRIVE_B LATCbits.LATC14
 
 unsigned int X, Y, x_vrednost, y_vrednost;
-const unsigned int AD_Xmin =220;
-const unsigned int AD_Xmax =3642;
-const unsigned int AD_Ymin =520;
+const unsigned int AD_Xmin =275;
+const unsigned int AD_Xmax =3580;
+const unsigned int AD_Ymin =370;
 const unsigned int AD_Ymax =3450;
 
 unsigned int sirovi0, sirovi1, sirovi2, sirovi3; 
@@ -121,7 +121,7 @@ void __attribute__ ((__interrupt__)) _T1Interrupt(void) // svakih 1ms
 }
 
 // prekidna rutina za tajmer 3
-void __attribute__ ((__interrupt__)) _T3Interrupt(void) // svakih 0.1us
+void __attribute__ ((__interrupt__)) _T3Interrupt(void) // svakih 0.1ms
 {
     TMR3 = 0;
     desetina_milisekunde++;
@@ -405,7 +405,7 @@ void TouchPanel (void)
     x_vrednost = sirovi0;//temp0 je vrednost koji nam daje AD konvertor na BOTTOM pinu		
 
     //skaliranje x-koordinate
-    X=(x_vrednost-220)*0.037405;
+    X=(x_vrednost-220)*0.0412238;
     // X= ((x_vrednost-AD_Xmin)/(AD_Xmax-AD_Xmin))*128;	
 //vrednosti AD_Xmin i AD_Xmax su minimalne i maksimalne vrednosti koje daje AD konvertor za touch panel.
     
@@ -422,7 +422,7 @@ void TouchPanel (void)
     y_vrednost = sirovi1;// temp1 je vrednost koji nam daje AD konvertor na LEFT pinu	
 
     //skaliranje y-koordinate
-    Y=(y_vrednost-520)*0.02184;
+    Y=(y_vrednost-520)*0.0207792;
     // Y= ((y_vrednost-AD_Ymin)/(AD_Ymax-AD_Ymin))*64;
   
     taster=OcitajTaster();
