@@ -542,7 +542,7 @@ int ProveraSifre()
     return tacna_sifra;
 }
 
-// f-ja za otvaranje vrata pomocu servo motora ( -90 stepeni )
+// f-ja za otvaranje vrata pomocu servo motora ( 90 stepeni )
 void OtvoriVrata()
 {
     unsigned int n;
@@ -556,7 +556,7 @@ void OtvoriVrata()
     }
 }
 
-// f-ja za zatvaranje vrata pomocu servo motora ( 90 stepeni )   
+// f-ja za zatvaranje vrata pomocu servo motora ( -90 stepeni )   
 void ZatvoriVrata()
 {
     unsigned int n;
